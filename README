@@ -99,7 +99,7 @@ Outputs:
 ----------------------------
 Weaver_lite
 ----------------------------
-Core PGM program, with SNP phasing disabled
+Core PGM program, with SNP phasing disabled to speed up
 
 INPUTS:
 	1	SV
@@ -114,13 +114,13 @@ INPUTS:
 Weaver PLOIDY
 ----------------------------
 
-Weaver PLOIDY -f ~/data/seq/hg19/number/noY/number_noY.fa -S ../G37566.TCGA-CH-5763-01A-11D-1576-08.1.bam.Weaver.GOOD -s ../SNP_dens -g ~/yang/JING/Weaver/data/GAP_20140416_num -w ../G37566.TCGA-CH-5763-01A-11D-1576-08.1.bam.wig -r 1 -m ~/yang/JING/Weaver/data/wgEncodeCrgMapabilityAlign100mer_number.bd -p 16
+Weaver PLOIDY -f  -S  -s ../SNP_dens -g GAP_20140416_num -w  -r 1 -m  -p 16
 
 
 
 INPUTS:
 
--f reference file (fasta)  [MANDATORY]
+-f reference file (fasta), should match the reference used in original bam file. Especially for most TCGA datasets, the alignment was performed on //www.broadinstitute.org/ftp/pub/seq/references/Homo_sapiens_assembly19.fasta, which does not have "chr" prefix  [MANDATORY]
 
 -S SV file, with format consistent with Weaver_SV. [MANDATORY]
  
@@ -130,30 +130,20 @@ INPUTS:
 
 -r 1, if first time running (generating temp files); 0 if want to use existing temp files. [default 1]
 
--m mappability file [MANDATORY]
+-m mappability file, download from http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz [MANDATORY]
 
 -p number of cores [default 1]
 
 
-
-
-
-
-
-
-
-----------------------------
-TEST data
-----------------------------
-
-
-
+-----------------------------
+FILE FORMAT DECLARITIONS
+-----------------------------
 
 Wiggle file:
 
 Wiggle file need to be declared with fixedStep, step 1 and span 1
 fixedStep chrom=chr1 start=9994 step=1 span=1
-file a chromosome has multiple declaration lines, they need to be sorted based on position:
+if a chromosome has multiple declaration lines, they need to be sorted based on position:
 fixedStep chrom=chr1 start=9994 step=1 span=1
 X
 X
@@ -163,12 +153,27 @@ X
 X
 X
 Is not allowed
+
+
+
 Bam file:
+
+Must be sorted and indexed.
+
 SNP file:
+
 NGS SNP link file
+
+
 1KGP SNP link
+
+
 SV:
+
+
 Genome region file:
+
+GAP regions in assembly are annotated.
 
 ###################
 Output:
