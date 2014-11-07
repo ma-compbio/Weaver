@@ -38,6 +38,21 @@ Bowtie (http://bowtie-bio.sourceforge.net/index.shtml)
 2	./INSTALL.sh
 
 
+-----------------------------
+DATA
+-----------------------------
+
+wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz
+
+
+
+
+
+-----------------------------
+EXAMPLE DATA
+-----------------------------
+
+wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_example.tar.gz
 
 ----------------------------
 Weaver_SV.pl
