@@ -1,0 +1,185 @@
+Weaver
+
+Allele specific base-pair resolution quantification of Strcutrual variations in cancer genome
+
+yangli9@illinois.edu
+
+Version 0.20
+
+----------------------------
+INSTALL
+----------------------------
+
+Bamtools (https://github.com/pezmaster31/bamtools) libraries are needed
+
+	included in Weaver_SV/lib and Weaver_SV/inc
+
+export LD_LIBRARY_PATH=<PREFIX>/Weaver/Weaver_SV/lib/:$LD_LIBRARY_PATH
+
+libz required //-lz flag
+
+Parallel::ForkManager (http://search.cpan.org/~szabgab/Parallel-ForkManager-1.06/lib/Parallel/ForkManager.pm) perl package is needed
+
+Bedtools (https://github.com/arq5x/bedtools)
+
+Samtools (http://samtools.sourceforge.net/)
+
+BOOST C++ library (http://www.boost.org/)
+
+BWA (http://bio-bwa.sourceforge.net/)
+
+Bowtie (http://bowtie-bio.sourceforge.net/index.shtml)
+
+
+
+
+1	Modify the required BOOST directory in src/Makefile
+
+2	./INSTALL.sh
+
+
+
+----------------------------
+Weaver_SV.pl
+----------------------------
+SV finding
+Input:
+	BAM file from BWA
+
+Output:
+	VCF file for SV
+
+----------------------------
+Weaver_pipeline.pl
+----------------------------
+Master program:
+	1	Generate SV
+	2	Generate other inputs needed for Weaver
+
+INPUTS
+
+DATA package:
+	1000 Genomes Project Phase 1 haplotypes
+
+
+
+----------------------------
+Weaver
+----------------------------
+Core PGM program
+
+INPUTS:
+	1	SV
+
+Outputs:
+	1	Purity and haploid-level sequencing coverage
+	2	Allele specific copy number of genomic regions
+	3	Allele specific copy number of structural variations
+	4	Relative timing of structural variations
+	5	Cancer scaffolds
+	5	Phasing of germline SNPs in CNV regions
+
+
+
+----------------------------
+Weaver_lite
+----------------------------
+Core PGM program, with SNP phasing disabled
+
+INPUTS:
+	1	SV
+	2	reference
+	3	Mappability (available for hg19)
+	4	Region (available for hg19)
+	5	wig (from bam)
+
+
+
+----------------------------
+Weaver PLOIDY
+----------------------------
+
+Weaver PLOIDY -f ~/data/seq/hg19/number/noY/number_noY.fa -S ../G37566.TCGA-CH-5763-01A-11D-1576-08.1.bam.Weaver.GOOD -s ../SNP_dens -g ~/yang/JING/Weaver/data/GAP_20140416_num -w ../G37566.TCGA-CH-5763-01A-11D-1576-08.1.bam.wig -r 1 -m ~/yang/JING/Weaver/data/wgEncodeCrgMapabilityAlign100mer_number.bd -p 16
+
+
+
+INPUTS:
+
+-f reference file (fasta)  [MANDATORY]
+
+-S SV file, with format consistent with Weaver_SV. [MANDATORY]
+ 
+-s SNP file, with ref and alt mappings [MANDATORY]
+
+-w wig file from bam, storing the coverage information [MANDATORY]
+
+-r 1, if first time running (generating temp files); 0 if want to use existing temp files. [default 1]
+
+-m mappability file [MANDATORY]
+
+-p number of cores [default 1]
+
+
+
+
+
+
+
+
+
+----------------------------
+TEST data
+----------------------------
+
+
+
+
+Wiggle file:
+
+Wiggle file need to be declared with fixedStep, step 1 and span 1
+fixedStep chrom=chr1 start=9994 step=1 span=1
+file a chromosome has multiple declaration lines, they need to be sorted based on position:
+fixedStep chrom=chr1 start=9994 step=1 span=1
+X
+X
+X
+fixedStep chrom=chr1 start=100 step=1 span=1
+X
+X
+X
+Is not allowed
+Bam file:
+SNP file:
+NGS SNP link file
+1KGP SNP link
+SV:
+Genome region file:
+
+###################
+Output:
+###################
+
+REGION_CN_PHASE: storing phased allele specific copy number
+
+CHR	BEGIN	END	ALLELE_1_CN	ALLELE_2_CN
+
+
+
+
+SV_CN_PHASE: Structural variation copy number and phasing, catagory
+
+CHR_1	POS_1	ORI_1	ALLELE_	CHR_2   POS_2   ORI_2   ALLELE_	CN	germline/somatic_post_aneuploidy/somatic_pre_aneuploidy
+
+
+
+###############
+CONTACT
+###############
+
+Yang Li
+Ma Lab
+Bioengineering Dept., University of Illinois at Urbana-Champaign
+
+yangli9@illinois.edu
+https://github.com/leofountain/Weaver
+
