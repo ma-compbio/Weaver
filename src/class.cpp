@@ -22,8 +22,6 @@
 #include "class.h"
 #include "ploidy.h"
 using namespace std;
-//ofstream oo("tempLOH");
-
 
 
 void Linear_region_info::new_set_value(string chr, int id, map<string, vector<site> >& JOB_LIST, map<string, vector<interval> >& Linear_region, map<string, map<interval, region_numbers> >& regionCov, vector<observe>& ALL_SNP){
