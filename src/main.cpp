@@ -246,61 +246,11 @@ int main_ploidy(){
 	return 0;
 }
 
-/*
-
-
-
-
-   int main_test(int argc, char *argv[]){
-   int thread = 64;
-   ifstream input1(argv[1]);
-   ifstream input2(argv[2]);
-   ifstream input3(argv[3]);
-   ifstream input_snp_link(argv[4]);
-   ifstream input5(argv[5]);
-   FA = string(argv[6]);
-   mapbd = string(argv[7]);
-   wig = string(argv[8]);
-   Normal_cov_limit = 2;
-//	int sys_flag = atoi(argv[9]);
-//	double BB = 0;
-BB = atof(argv[10]); // 0 stands for ploidy undefined
-if(BB != 0)
-Normal_cov_limit = atof(argv[11]);
-readRange(input3, RANGE_b, RANGE_e, LIST);
-readSV(input1, RANGE_b,  RANGE_e,  LIST,  LONE, SV_LIST, SV_list, LINK);
-readSNP(input2,  RANGE_b,  RANGE_e,  ALL_SNP,  REF_ALT_FLAG,  isolatedSNP, LIST);
-readSNP_link(input_snp_link, SNP_LINK);
-readSNP_link_1000G(input5,SNP_1000G);
-Partition( LIST,  JOB_LIST,  SV_FLAG_L,  SV_FLAG_R,  LONE,  LO_L, LO_R,  regionCov, ALL_SNP, RANGE_b, isolatedSNP, SV_list, BIN, FA, mapbd, thread, sys_flag);
-Job_partition( JOB_LIST,  SV_FLAG_L,  SV_FLAG_R,  LO_L,  LO_R, SV_list_link,  SV_list_CNV,  Linear_region, Linear_region_info_vec );
-Estimate_ploidy(BB, JOB_LIST, hap_coverage_lowerbound, hap_coverage_upperbound, Linear_region, Linear_region_info_vec, regionCov, ALL_SNP, thread);
-cout << "SV copy number done\n";
-findSimpleLink(LINK, SV_list_link, Linear_region);
-Viterbi_new(JOB_LIST, regionCov,  SNP_LINK,  SNP_1000G,  ALL_SNP,  SV_FLAG_L,  SV_FLAG_R,  LO_L, LO_R, SV_list_CNV, REF_ALT_FLAG, SV_region_id, thread, SV_list, LINK);
-LoopyBeliefPropagation( JOB_LIST, SV_list_CNV,  SV_list_link, SV_list, LINK , prob_matrix_1, prob_matrix_2, Linear_region, thread);
-Viterbi(JOB_LIST, regionCov,  SNP_LINK,  SNP_1000G,  ALL_SNP,  SV_FLAG_L,  SV_FLAG_R,  LO_L, LO_R, SV_list_CNV, REF_ALT_FLAG, SV_region_id, thread, SV_list, LINK, Linear_region);
-cout << "LBP done\n";
-final_report(JOB_LIST, SV_FLAG_L, SV_FLAG_R, SV_list, LINK, ALL_SNP);
-return 0;
-}
-*/
 int main_lite(){
 	//int thread = 30;
 	ifstream input1(SVfile);
 	ifstream input2(SNPfile);
 	ifstream input3(GAPfile);
-	//	ifstream input_snp_link(argv[4]);
-	//	ifstream input5(argv[5]);
-	//	FA = string(argv[6]);
-	//	mapbd = string(argv[7]);
-	//	wig = string(argv[8]);
-	//	Normal_cov_limit = 2;
-	//	int sys_flag = atoi(argv[9]);
-	//	double BB = 0;
-	//	BB = atof(argv[10]); // 0 stands for ploidy undefined
-	//	if(BB != 0)
-	//		Normal_cov_limit = atof(argv[11]);
 	readRange(input3, RANGE_b, RANGE_e, LIST, chr_vec);
 	readSV(input1, RANGE_b,  RANGE_e,  LIST,  LONE, SV_LIST, SV_list, LINK);
 	readSNP(input2,  RANGE_b,  RANGE_e,  ALL_SNP,  REF_ALT_FLAG,  isolatedSNP, LIST);
@@ -321,51 +271,22 @@ int main_lite(){
 	return 0;
 }
 
-/*
-   int main_all(int argc, char *argv[]){
-   int thread = 64;
-   ifstream input1(argv[1]);
-   ifstream input2(argv[2]);
-   ifstream input3(argv[3]);
-   ifstream input_snp_link(argv[4]);
-   ifstream input5(argv[5]);
-   FA = string(argv[6]);
-   mapbd = string(argv[7]);
-   wig = string(argv[8]);
-   Normal_cov_limit = 2;
-   int sys_flag = atoi(argv[9]);
-   double BB = 0;
-   BB = atof(argv[10]);
-   if(BB != 0)
-   Normal_cov_limit = atof(argv[11]);
-   readRange(input3, RANGE_b, RANGE_e, LIST);
-   readSV(input1, RANGE_b,  RANGE_e,  LIST,  LONE, SV_LIST, SV_list, LINK);
-   readSNP(input2,  RANGE_b,  RANGE_e,  ALL_SNP,  REF_ALT_FLAG,  isolatedSNP, LIST);
-   readSNP_link(input_snp_link, SNP_LINK);
-   readSNP_link_1000G(input5,SNP_1000G);
-   Partition( LIST,  JOB_LIST,  SV_FLAG_L,  SV_FLAG_R,  LONE,  LO_L, LO_R,  regionCov, ALL_SNP, RANGE_b, isolatedSNP, SV_list, BIN, FA, mapbd, thread, sys_flag);
-   Job_partition( JOB_LIST,  SV_FLAG_L,  SV_FLAG_R,  LO_L,  LO_R, SV_list_link,  SV_list_CNV,  Linear_region, Linear_region_info_vec );
-   Estimate_ploidy(BB, JOB_LIST, hap_coverage_lowerbound, hap_coverage_upperbound, Linear_region, Linear_region_info_vec, regionCov, ALL_SNP, thread);
-   cout << "SV copy number done\n";
-   findSimpleLink(LINK, SV_list_link, Linear_region);
-   Viterbi_new(JOB_LIST, regionCov,  SNP_LINK,  SNP_1000G,  ALL_SNP,  SV_FLAG_L,  SV_FLAG_R,  LO_L, LO_R, SV_list_CNV, REF_ALT_FLAG, SV_region_id, thread, SV_list, LINK);
-   LoopyBeliefPropagation( JOB_LIST, SV_list_CNV,  SV_list_link, SV_list, LINK , prob_matrix_1, prob_matrix_2, Linear_region, thread);
-   Viterbi(JOB_LIST, regionCov,  SNP_LINK,  SNP_1000G,  ALL_SNP,  SV_FLAG_L,  SV_FLAG_R,  LO_L, LO_R, SV_list_CNV, REF_ALT_FLAG, SV_region_id, thread, SV_list, LINK, Linear_region);
-   cout << "LBP done\n";
-   final_report(JOB_LIST, SV_FLAG_L, SV_FLAG_R, SV_list, LINK, ALL_SNP);
-   return 0;
-   }
-   */
+
+
+
 int main(int argc, char *argv[]){
 	if(argc <= 1){
 		usage();
 		exit(0);
 	}
-	//	cout << argc << endl;
 	string bin = argv[0];
 	BIN = bin.substr(0, bin.rfind("/")+1);
 	//cout << BIN << endl;
 	MODE = string(argv[1]);
+	//RUN MODE
+	//PLOIDY: Estimate ploidy
+	//LITE: SNP phasing disabled, much faster
+	//
 	cout << "RUN MODE\t" << MODE << endl;
 	return main_opt(argc-1,argv+1);
 	exit(0);
