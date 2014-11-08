@@ -52,28 +52,15 @@ using namespace std;
 vector<ploidy_seg> WORK_SEG;
 vector<double> disper_vec;
 double lowest = 1000;
-//ofstream o("TARGET");
-/*
- *
- *
- struct ploidy_seg{
-        string chr;
-        int begin, end;
-        double mean;
-        double var;
-        int if_hete;
-        double rate_density;//
-        double rate_mean;// -1 for NULL
-        double rate_var;
- */
 
 void pute(string chr, int id, map<string, vector<site> >& JOB_LIST, map<string, vector<interval> >& Linear_region, map<string, map<interval, region_numbers> >& regionCov, vector<observe>& ALL_SNP, ofstream & o){
 	double sum = 0, sum_r = 0, N = 0;
 	double N_r = 0;
 	int range = JOB_LIST[chr][Linear_region[chr][id].end].end - JOB_LIST[chr][Linear_region[chr][id].start].begin;
-	if(range < 0){
-		cout << "cccc\t" << JOB_LIST[chr][Linear_region[chr][id].start].begin << "\t" << JOB_LIST[chr][Linear_region[chr][id].end].end  << endl;
-	}
+	assert(range >= 0);
+	//{
+	//	cout << "cccc\t" << JOB_LIST[chr][Linear_region[chr][id].start].begin << "\t" << JOB_LIST[chr][Linear_region[chr][id].end].end  << endl;
+	//}
 	vector <double> rate_vec;
 	int seg_b, seg_e;
 	seg_b = Linear_region[chr][id].start;
@@ -290,44 +277,6 @@ void new_Estimate_ploidy(double BB, map<string, vector<site> >& JOB_LIST, int ha
 			//cout << "EST\t" << WORK_SEG[i].chr << "\t" << WORK_SEG[i].begin << "\t" << WORK_SEG[i].end << "\t" << WORK_SEG[i].mean << "\t" << WORK_SEG[i].rate_mean << endl;
 		}
 	}
-	/*
-	   for(double test_mean = 15; test_mean <=60; test_mean+=0.5){
-	   double LOH_cutoff = 0.5*test_mean;
-	   for(Normal_cov = 0; Normal_cov <= Normal_cov_limit; Normal_cov+=0.5){
-	   if(Normal_cov != 0 && Normal_cov < 10 && Normal_cov > 5 && Normal_cov != 2 && Normal_cov != int(test_mean*0.15)){
-	   continue;
-	   }
-	   if(Normal_cov / (test_mean+Normal_cov) > 0.2)// normal cell fraction < 30%
-	   continue;
-//		if(!(Normal_cov == 0 && test_mean == 50 || Normal_cov == 6 && test_mean == 21))
-//			continue;
-double sum = 0;
-for(map<string, vector<site> >::iterator it = JOB_LIST.begin(); it != JOB_LIST.end(); it++){
-string chr = it->first;
-#pragma omp parallel for num_threads(thread)
-for(int i = 0; i < Linear_region[chr].size(); i++){
-double k = Linear_region_info_vec[chr][i].eva(test_mean);
-#pragma omp critical
-{
-sum += k;
-	//cout << "ri\t" << k << "\t" <<   JOB_LIST[chr][Linear_region[chr][i].start].begin << "\t" << JOB_LIST[chr][Linear_region[chr][i].end].end  << endl;
-	}
-	}
-
-	}
-
-//cout << "XX\t" << test_mean << "\t" << Normal_cov << "\t" << sum << endl;
-if(max == 0 || (max != 0 && max < sum)){
-max = sum;
-base_cov = test_mean;
-best_norm = Normal_cov;
-}
-}
-}
-cout << "base_mean = " << base_cov << "\t" << best_norm << endl;
-best_cov = base_cov;
-cout << "base_mean = " << base_cov << endl;
-*/
 }
 
 

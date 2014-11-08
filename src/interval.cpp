@@ -29,16 +29,9 @@ bool find(map<interval, string>& s, int  point)
 		if(Itinterval == s.begin())
 			return false;
 		--Itinterval;
-		if(point == 164833427)
-			cout << "xc\t" << Itinterval->first.start  << "\t" << Itinterval->first.end << "\t" << point << endl;
 		return point <= Itinterval->first.end && point >= Itinterval->first.start ? true : false;
 
 	}
-	if(point == 164833427){
-	cout << "xc\t" << Itinterval->first.start  << "\t" << Itinterval->first.end << "\t" << point << endl;
-	}
-
-
 	return point <= Itinterval->first.end && point >= Itinterval->first.start ? true : false;
 
 }

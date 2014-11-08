@@ -75,24 +75,18 @@ double version = 0.28;// 2014/01/27
 string BIN;
 
 string SVfile, SNPfile, GAPfile;//(argv[1]);
-//ifstream input2;//(argv[2]);
-//ifstream input3;//(argv[3]);
 ifstream input_snp_link;//(argv[4]);
 ifstream input5;//(argv[5]);
-//FA;// = string(argv[6]);
-//mapbd;// = string(argv[7]);
-//wig = string(argv[8]);
 int sys_flag; // = atoi(argv[9]);
 double BB;
 int thread;// number of threads
 
 string MODE;
-//Normal_cov_limit = 2;
 
 
 static int usage(){
 	cout << "Program: Weaver\n" << version << endl;
-	cout << "all\nploidy\n";
+	cout << "ALL\tPLOIDY\tLITE\n";
 }
 
 
@@ -100,7 +94,7 @@ int main_lite();
 int main_ploidy();
 
 int main_opt(int argc, char *argv[]){
-	po::options_description generic("Weaver ploidy options");
+	po::options_description generic("Weaver options");
 	generic.add_options()
 		("VERSION,V", "print version string")
 		("FASTA,f", po::value<string>(), "[MANDATORY] reference fasta file")
@@ -118,6 +112,10 @@ int main_opt(int argc, char *argv[]){
 		("RUNFLAG,r", po::value<int>(), "[MANDATORY] run flag 1: from start; 0: region files already there")
 		("help,h", "print help message")
 		;
+	if(argc <= 1){
+		cout << generic << "\n";
+		exit(0);
+	}
 
 	po::variables_map vm;//
 	po::store(po::command_line_parser(argc, argv).options(generic).allow_unregistered().run(), vm);
@@ -223,7 +221,6 @@ int main_opt(int argc, char *argv[]){
 
 
 int main_ploidy(){
-	//int thread = 30;
 	ifstream input1(SVfile);
 	ifstream input2(SNPfile);
 	ifstream input3(GAPfile);
@@ -247,7 +244,6 @@ int main_ploidy(){
 }
 
 int main_lite(){
-	//int thread = 30;
 	ifstream input1(SVfile);
 	ifstream input2(SNPfile);
 	ifstream input3(GAPfile);
