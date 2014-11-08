@@ -17,13 +17,9 @@ using namespace std;
 // get GC ratio for given genome sequence
 
 string single_ref;
-
 map<string, vector<pair<int, int> > > range;
-
 double computeGC(string);
-
 int thread;
-
 void GC(string chr){
 #pragma omp parallel for num_threads(thread)
 	for (int i = 0; i < range[chr].size(); i++){
@@ -90,7 +86,6 @@ int run_from_ref(ifstream& input_ref){
 					transform(single_ref.begin(),single_ref.end(),single_ref.begin(),::toupper);
 					GC(chr_temp);
 				}
-				//REF[chr_temp] = single_ref;
 				chr_temp = chr;
 				single_ref = "";
 			}
@@ -102,7 +97,6 @@ int run_from_ref(ifstream& input_ref){
 		transform(single_ref.begin(),single_ref.end(),single_ref.begin(),::toupper);
 		GC(chr_temp);
 	}
-	//REF[chr_temp] = single_ref;
 	return 0;
 }
 
