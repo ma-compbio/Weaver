@@ -31,19 +31,9 @@
 //Do the phasing for both SNP and SV
 //
 //
-//
-//Dependency: Distri.pl  	cal.pl   ######## for getting tempread file
-//
 //ALL RIGHTS RESEARVED YANGLI9@ILLINOIS.EDU
 //
-//nohup ./00686048 ALL_BOTH ALL_SNP ManualGap SNPLINK > YA
 //
-//
-//Version 0.12 July/18/2013
-//
-//Version 0.16 Sep/30/2013
-//
-//Version 0.17 Nov/11/2013  ID bug fixed
 //
 //#define THRESHHOLD 40
 using namespace std;
@@ -69,9 +59,7 @@ set<site>SV_FLAG_L, SV_FLAG_R, LO_L, LO_R;
 map<site, map<hidden_state, double> > prob_matrix_1, prob_matrix_2;// inward_maxtrix, _prob_matrix_2, _prob_matrix_1;
 map<string, vector<interval> >Linear_region;
 map<string, vector<Linear_region_info> >Linear_region_info_vec;
-//
-//double version = 0.27;// 2014/01/13
-double version = 0.28;// 2014/01/27
+double version = 0.20;
 string BIN;
 
 string SVfile, SNPfile, GAPfile;//(argv[1]);

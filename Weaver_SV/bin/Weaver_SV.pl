@@ -92,4 +92,4 @@ system("$Bin/checkRange.pl $GAPFILE Only_SOFT | $Bin/rmSegDup.pl $NUMBER_FLAG $B
 system("$Bin/checkRange.pl $GAPFILE Only_Pair | $Bin/rmSegDup.pl $NUMBER_FLAG $Bin/../data/SegDup_pair | $Bin/trim_pair.pl 5 > $BARCODE.FINAL_PAIR"); ## 5 as cutoff
 system("cat $BARCODE.FINAL_SV $BARCODE.FINAL_SOFT $BARCODE.FINAL_PAIR | $Bin/screen_blacklist.pl $NUMBER_FLAG $Bin/../data/hg19_SV_blacklist | $Bin/selfcheck.pl | $Bin/RemoveShort.pl 2000 | $Bin/rmCross.pl > $BARCODE.ALL_SV");## del or dup less than 2000 are discarted
 system("$Bin/20k.pl $BARCODE.ALL_SV 20000 10 10 > $BARCODE.GOOD");
-system("rm $BARCODE.soft.fastq $BARCODE.soft.un.fastq $BARCODE.soft.bwt $BARCODE.soft.un.bwa.sam");# $BARCODE.NEAT");
+system("rm $BARCODE.soft.fastq $BARCODE.soft.un.fastq $BARCODE.soft.bwt $BARCODE.soft.un.bwa.sam $BARCODE.bwa_partial_align");# $BARCODE.NEAT");
