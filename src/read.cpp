@@ -125,9 +125,6 @@ void readSV(ifstream& input, map<string, int>& RANGE_b, map<string, int>& RANGE_
 		if(FLAG_2 == 0 && FLAG_1 == 0){
 			continue;
 		}
-	//	if(b1 == "16322980"){
-	//		cout << 
-		
 		if(FLAG_1 == 1 && FLAG_2 == 0){
 			if(ori1 == "+"){
 				LONE[chr1][interval(p1+1,p1+1)]=BAM_line;
@@ -215,8 +212,6 @@ void readSV(ifstream& input, map<string, int>& RANGE_b, map<string, int>& RANGE_
 		LINK[CA(chr1, p1, ori1)] = CA(chr2, p2, ori2);
 		LINK[CA(chr2, p2, ori2)] = CA(chr1, p1, ori1);
 	}
-	//get dup_list
-	//for( map<string, map<int, CA> > 
 }
 
 

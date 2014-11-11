@@ -107,17 +107,18 @@ void Segment_prob(map<string, vector<site> >& JOB_LIST, map<string, vector<inter
 }
 
 void Initiate(string chr, int b, int e, int ori_flag, map<string, map<interval, region_numbers> >& regionCov, map<string, vector<site> >& JOB_LIST, map<site, map<hidden_state, double> >& prob_matrix_1, map<site, map<hidden_state, double> >& prob_matrix_2){
+	//Initiate node probabilities
+	// 
+	//
 	int local_max = regionCov[chr][interval(JOB_LIST[chr][b].begin, JOB_LIST[chr][b].end)].max;
 	int local_min = regionCov[chr][interval(JOB_LIST[chr][b].begin, JOB_LIST[chr][b].end)].min;
 	int local_max_e = regionCov[chr][interval(JOB_LIST[chr][e].begin, JOB_LIST[chr][e].end)].max;
 	int local_min_e = regionCov[chr][interval(JOB_LIST[chr][e].begin, JOB_LIST[chr][e].end)].min;
 	assert(local_max < 5001);
 	assert(local_max_e < 5001);
-	//cout << local_max << "\t" << local_min << "\t" << local_max_e << "\t" << local_min_e << endl;
 	if(ori_flag == 0){
 		for(int mi = 0; mi <= local_max/2; mi++){
 			for(int ma = max(mi, local_min-mi); ma <= local_max-mi; ma++){
-				//cout << mi << "\t" << ma << endl;
 				prob_matrix_1[site(chr, b, e, "", -1)][hidden_state(ma,mi,0,0)] = 0;
 			}
 			if(local_max >= THRESHHOLD){
@@ -154,10 +155,7 @@ void Initiate(string chr, int b, int e, int ori_flag, map<string, map<interval, 
 }
 
 int Part_Viterbi(string chr, int b, int e, int ori_flag, map<string, map<interval, region_numbers> >& regionCov, map<string, vector<site> >& JOB_LIST, map<site, map<hidden_state, double> >& prob_matrix_1, map<site, map<hidden_state, double> >& prob_matrix_2, vector<observe>& ALL_SNP){// |----------|---------- ori_flag   0 1       2
-	//cout << chr << "\t" << b << "\t" << e << "\t" << ori_flag << endl;
 	map<hidden_state, double>Prob, New_Prob, Prob_e;
-	//double P_cov, P_freq;
-	//double trans, local_p;
 	hidden_state temp_state(0,0,0,0);
 	int local_max = regionCov[chr][interval(JOB_LIST[chr][b].begin, JOB_LIST[chr][b].end)].max;
 	int local_min = regionCov[chr][interval(JOB_LIST[chr][b].begin, JOB_LIST[chr][b].end)].min;
@@ -176,8 +174,6 @@ int Part_Viterbi(string chr, int b, int e, int ori_flag, map<string, map<interva
 				if(flag_e == -1)
 					Prob_e[hidden_state(ma_e,mi_e,0,0)] = 0.1;
 				else{
-
-					//cout << "sb\t" << mi_e << "\t" << ma_e << endl;
 					if(JOB_LIST[chr][e].type == "SNP"){
 						int id = JOB_LIST[chr][e].id - 1;
 						freq_e = norm(mi_e, ALL_SNP[id].minor_cov);
@@ -213,7 +209,6 @@ int Part_Viterbi(string chr, int b, int e, int ori_flag, map<string, map<interva
 				}
 				if(b == e){
 					prob_matrix_1[site(chr, b, e, "", -1)][hidden_state(ma,mi,0,0)] = log(Prob[hidden_state(ma,mi,0,0)]);
-					//cout << mi << "\t" << ma << "\t" <<  prob_matrix_1[site(chr, b, e, "", -1)][hidden_state(ma,mi,0,0)] << endl;
 				}
 			}
 			if(local_max >= THRESHHOLD){
@@ -224,11 +219,8 @@ int Part_Viterbi(string chr, int b, int e, int ori_flag, map<string, map<interva
 		return 0;
 	}
 	if(ori_flag == 0){
-		//int L_max = 1;
-		//cout << local_min << "\t" << local_max << endl;
 		for(int mi = 0; mi <= local_max/2; mi++){
 			for(int ma = max(mi, local_min - mi); ma <= local_max-mi; ma++){
-				//prob_matrix_1[site(chr, b, e, "", -1)][hidden_state(ma,mi,0,0)] = L_max;
 				prob_matrix_1[site(chr, b, e, "", -1)][hidden_state(ma,mi,0,0)] = Optimal(chr,b,e,ma,mi,-1,-1,Prob[hidden_state(ma,mi,0,0)],-1,1, regionCov, JOB_LIST, ALL_SNP);
 			}
 			if(local_max >= THRESHHOLD){
@@ -237,7 +229,6 @@ int Part_Viterbi(string chr, int b, int e, int ori_flag, map<string, map<interva
 		}
 		for(int mi_e = 0; mi_e <= local_max_e/2; mi_e++){
 			for(int ma_e = max(mi_e, local_min_e - mi_e); ma_e <= local_max_e-mi_e; ma_e++){
-				//prob_matrix_2[site(chr, b, e, "", -1)][hidden_state(ma_e,mi_e,0,0)] = L_max;
 				prob_matrix_2[site(chr, b, e, "", -1)][hidden_state(ma_e,mi_e,0,0)] = Optimal(chr,b,e,-1,-1,ma_e,mi_e,-1,Prob_e[hidden_state(ma_e,mi_e,0,0)],2, regionCov, JOB_LIST, ALL_SNP);
 			}
 			if(local_max_e >= THRESHHOLD){
@@ -246,7 +237,6 @@ int Part_Viterbi(string chr, int b, int e, int ori_flag, map<string, map<interva
 		}
 	}
 	if(ori_flag == 2){
-		//cout << local_min_e << "\t" << local_max_e << endl;
 		for(int mi_e = 0; mi_e <= local_max_e/2; mi_e++){
 			for(int ma_e =  max(mi_e, local_min_e - mi_e); ma_e <= local_max_e-mi_e; ma_e++)
 				prob_matrix_2[site(chr, b, e, "", -1)][hidden_state(ma_e,mi_e,0,0)]=Optimal(chr,b,e,-1,-1,ma_e,mi_e,-1,Prob_e[hidden_state(ma_e,mi_e,0,0)],ori_flag, regionCov, JOB_LIST, ALL_SNP);
@@ -265,7 +255,8 @@ int Part_Viterbi(string chr, int b, int e, int ori_flag, map<string, map<interva
 }
 
 double Optimal(string chr, int b, int e, int MA, int MI, int MA_e, int MI_e, double Prob_b, double Prob_e, int flag, map<string, map<interval, region_numbers> >& regionCov, map<string, vector<site> >& JOB_LIST, vector<observe>& ALL_SNP){
-	//      cout << chr << "\t" << b << "\t" << e << "\t" << MA << "\t" << MI << "\t" <<  MA_e<< "\t" <<  MI_e << "\t" << flag << endl;
+	// Node reduction in MRF
+	//
 	map<hidden_state, double>_Prob, _New_Prob;
 	double P_cov, P_freq;
 	double trans, local_p;
@@ -281,8 +272,7 @@ double Optimal(string chr, int b, int e, int MA, int MI, int MA_e, int MI_e, dou
 		local_min_pre = regionCov[chr][interval(JOB_LIST[chr][b].begin, JOB_LIST[chr][b].end)].min;
 		local_max_pre = regionCov[chr][interval(JOB_LIST[chr][b].begin, JOB_LIST[chr][b].end)].max;
 	}
-	//if()
-	int i;
+	int i; // temp_label
 	if(flag == 0 || flag == 1)
 		_Prob[hidden_state(MA,MI,0,0)]  = log(Prob_b);
 	else
@@ -381,7 +371,6 @@ double Optimal(string chr, int b, int e, int MA, int MI, int MA_e, int MI_e, dou
 						break;
 				}
 				if(i == e && flag == 0){
-					//cout << max_p << endl;
 					return max_p;
 				}
 				_New_Prob[hidden_state(ma,mi,0,0)] = max_p;
@@ -397,7 +386,6 @@ double Optimal(string chr, int b, int e, int MA, int MI, int MA_e, int MI_e, dou
 		local_min_pre = local_min;
 		local_max_pre = local_max;
 	}
-	//      cout << tmp_max << endl;
 	return tmp_max;
 }
 
@@ -435,7 +423,6 @@ void findSimpleLink(map<CA, CA>& LINK, map<string, map<int, int> >& SV_list_link
 					lookBack[it->first.chr][Linear_region[it->first.chr][id_2].start] = Linear_region[it->first.chr][id_1].end;
 					lookBack_store[it->first.chr][Linear_region[it->first.chr][id_1].end];
 				}
-				//cout << "hei\t" << it->first.chr << "\t" << it->second.pos << "\t" << it->first.pos << endl;
 			}
 
 		}
@@ -619,21 +606,6 @@ SV_anno::SV_anno(string chrA, int id_A_s, int id_A, string chrB, int id_B_s, int
 	SV2 = s2;
 }
 
-/*
-   CA& SV_anno::find_next(CA & sv){
-   if(sv == SV1){
-   return SV2;
-   }
-   else if(sv == SV2){
-   return SV1;
-   }
-   else{
-   cout << "not found\n";
-   }
-   }
-   */
-
-//void SV_anno::Factor(string chr1, int id_1_s, int id_1, string chr2, int id_2_s, int id_2, map<string, vector<interval> >& Linear_region, map<string, vector<site> >& JOB_LIST, map<string, map<int, int> >& SV_list_CNV, map<site, map<hidden_state, double> >& prob_matrix_1, map<site, map<hidden_state, double> >& prob_matrix_2){
 void SV_anno::Factor(map<string, vector<interval> >& Linear_region, map<string, vector<site> >& JOB_LIST, map<string, map<int, int> >& SV_list_CNV, map<site, map<hidden_state, double> >& prob_matrix_1, map<site, map<hidden_state, double> >& prob_matrix_2){
 	int del_flag = 0;
 	int dup_flag = 0;
@@ -654,7 +626,7 @@ void SV_anno::Factor(map<string, vector<interval> >& Linear_region, map<string, 
 	int left_weak_flag,  right_weak_flag;
 #pragma omp critical
 	{
-		cout << "xx\n";
+		//cout << "xx\n";
 		if(id_1_s < id_1){
 			left_cn = SV_list_CNV[chr1][JOB_LIST[chr1][Linear_region[chr1][id_1].start].begin];
 			left_weak_flag = SV_WEAK[chr1][JOB_LIST[chr1][Linear_region[chr1][id_1].start].begin];
@@ -677,7 +649,7 @@ void SV_anno::Factor(map<string, vector<interval> >& Linear_region, map<string, 
 		}
 	}
 	if(right_cn == left_cn && left_cn != 0){
-		cout << "xxb\t" << left_cn << endl;
+		//cout << "xxb\t" << left_cn << endl;
 		NUM = left_cn;
 		return;
 	}
@@ -685,7 +657,7 @@ void SV_anno::Factor(map<string, vector<interval> >& Linear_region, map<string, 
 	else{
 		if(min(right_cn, left_cn) >= 4){
 			NUM = min(right_cn, left_cn);
-			cout << "ssb\t" << NUM << endl;
+			//cout << "ssb\t" << NUM << endl;
 			return;
 		}
 		if(left_weak_flag == 1 && right_weak_flag == 0)
@@ -696,7 +668,7 @@ void SV_anno::Factor(map<string, vector<interval> >& Linear_region, map<string, 
 			NUM = max(right_cn, left_cn);
 		else
 			NUM = min(right_cn, left_cn);
-		cout << "kkd\t" << NUM << endl;
+		//cout << "kkd\t" << NUM << endl;
 		return;
 	}
 	NUM = 0;//!
@@ -773,20 +745,8 @@ void SV_anno::Factor(map<string, vector<interval> >& Linear_region, map<string, 
 							continue;
 						else{
 							// if CN is too high, SV CN is hard to define
-							double r1, r2;
-							//if(it1->first.Minor + it1->first.Major > 10){
-							//      r1 = 0.0001/double(it1->first.Minor + it1->first.Major);
-							//      }
-							//      else
-							r1 = 1;
-							//      if(it2->first.Major + it2->first.Minor > 10){
-							//              r2 = 0.0001/double(it2->first.Major + it2->first.Minor);
-							//      }
-							//      else
-							r2 = 1;
+							double r1=1, r2=1;
 							local_sv_p = r1*(it1->second + it1_s->second) + r2*(it2->second + it2_s->second);
-
-
 							if(SV_CNV_p.find(SV_CNV) == SV_CNV_p.end()){
 								SV_CNV_p[SV_CNV] = local_sv_p;
 								if(local_max == 1 || local_max < local_sv_p){
@@ -827,7 +787,6 @@ void SV_anno::Factor(map<string, vector<interval> >& Linear_region, map<string, 
 		int local_max_2 = 1;
 		int MAX_SV_1 = -1;
 		int MAX_SV_2 = -1;
-
 		if(copy_flag_1 == 1)
 			for(it1 = prob_matrix_temp_1.begin(); it1!= prob_matrix_temp_1.end(); it1++){
 				if(it1->second < -DBL_MAX)
