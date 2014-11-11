@@ -1,11 +1,8 @@
 #!/bin/sh
 
-# install commands for FusionHunter
-
-
 
 cd src/ ; make ; cd ../
 
-cd AEGIS_SV/src/ ; make
+cd Weaver_SV/src/ ; make
 
 

@@ -1,20 +1,12 @@
-#include <numeric>
-#include <functional>
 #include <iostream>
 #include <string>
 #include <vector>
 #include <map>
+#include <set>
 #include <iomanip>
 #include <fstream>
-#include <cctype>
-#include <set>
-#include <iterator>
-#include <algorithm>
 #include <sstream>
 #include <stdlib.h>
-#include <cctype>
-#include <math.h>
-#include <assert.h>
 #include <float.h>
 #include "parameters.h"
 #include "interval.h"
@@ -34,12 +26,9 @@
 //ALL RIGHTS RESEARVED YANGLI9@ILLINOIS.EDU
 //
 //
-//
 //#define THRESHHOLD 40
 using namespace std;
 namespace po = boost::program_options;
-
-//
 map<string, map<int, int> > isolatedSNP;
 map<string, map<int, string> > SNP_LINK;
 map<string, map<int, double> > SNP_1000G;
@@ -61,7 +50,6 @@ map<string, vector<interval> >Linear_region;
 map<string, vector<Linear_region_info> >Linear_region_info_vec;
 double version = 0.20;
 string BIN;
-
 string SVfile, SNPfile, GAPfile;//(argv[1]);
 ifstream input_snp_link;//(argv[4]);
 ifstream input5;//(argv[5]);
@@ -71,12 +59,10 @@ int thread;// number of threads
 
 string MODE;
 
-
 static int usage(){
 	cout << "Program: Weaver\n" << version << endl;
 	cout << "ALL\tPLOIDY\tLITE\n";
 }
-
 
 int main_lite();
 int main_ploidy();
@@ -104,7 +90,6 @@ int main_opt(int argc, char *argv[]){
 		cout << generic << "\n";
 		exit(0);
 	}
-
 	po::variables_map vm;//
 	po::store(po::command_line_parser(argc, argv).options(generic).allow_unregistered().run(), vm);
 	po::notify(vm);
@@ -212,17 +197,9 @@ int main_ploidy(){
 	ifstream input1(SVfile);
 	ifstream input2(SNPfile);
 	ifstream input3(GAPfile);
-	//	FA = string(argv[6]);
-	//	mapbd = string(argv[7]);
-	//	wig = string(argv[8]);
-	//	double BB;
-	//	Normal_cov_limit = 2;
-	//	int sys_flag = atoi(argv[9]);
 	readRange(input3, RANGE_b, RANGE_e, LIST, chr_vec);
 	readSV(input1, RANGE_b,  RANGE_e,  LIST,  LONE, SV_LIST, SV_list, LINK);
 	readSNP(input2,  RANGE_b,  RANGE_e,  ALL_SNP,  REF_ALT_FLAG,  isolatedSNP, LIST);
-	//readSNP_link(input_snp_link, SNP_LINK);
-	//readSNP_link_1000G(input5,SNP_1000G);
 	Partition( LIST,  JOB_LIST,  SV_FLAG_L,  SV_FLAG_R,  LONE,  LO_L, LO_R,  regionCov, ALL_SNP, RANGE_b, isolatedSNP, SV_list, BIN, FA, mapbd, thread, sys_flag);
 	Job_partition( JOB_LIST,  SV_FLAG_L,  SV_FLAG_R,  LO_L,  LO_R, SV_list_link,  SV_list_CNV,  Linear_region, Linear_region_info_vec );
 	new_Estimate_ploidy(BB, JOB_LIST, hap_coverage_lowerbound, hap_coverage_upperbound, Linear_region, Linear_region_info_vec, regionCov, ALL_SNP, thread);
@@ -254,8 +231,6 @@ int main_lite(){
 	final_report(JOB_LIST, SV_FLAG_L, SV_FLAG_R, SV_list, LINK, ALL_SNP);
 	return 0;
 }
-
-
 
 
 int main(int argc, char *argv[]){

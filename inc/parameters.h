@@ -19,8 +19,5 @@ const double Disp = 2.0;//2.8;
 const int tileSize = 1000;
 const int max_cov = 8;
 //extern double base_cov;
-//extern std::string BIN;
-//extern std::string FA;
-//extern std::string mapbd;
  
 #endif
