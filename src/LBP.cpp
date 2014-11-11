@@ -5,13 +5,11 @@
 #include <map>
 #include <iomanip>
 #include <fstream>
-#include <cctype>
 #include <set>
 #include <iterator>
 #include <algorithm>
 #include <sstream>
 #include <stdlib.h>
-#include <cctype>
 #include <math.h>
 #include <assert.h>
 #include <float.h>
@@ -52,21 +50,15 @@ using namespace std;
 map<string, map<int, hidden_state> >pre_del, pre_dup;
 vector<SV_anno> SV_PARALLEL_JOB;
 map<CA, int> CA_2_SV_anno, CA_2_hapBlock;
-map<string, vector< class hapBlock> > hapBlock_map;
-map<string, map<int, int> > visit_sv;
+map<string, vector< class hapBlock> > hapBlock_map; 
+map<string, map<int, int> > visit_sv; // visit all phased SVs
 map<string, map<int, int> >lookBack;
 map<string, map<int, map<hidden_state, double> > >lookBack_store; // link to del/dup regions
-//map<CA, int> CA_PHASE;
-
 map<string, map<int, int> > SV_WEAK;
 
 
-//ofstream o1("SV_CN_PHASE"); // for SV
-//ofstream o2("REGION_CN_PHASE");// for REGION
-//ofstream o3("SNP_CN_PHASE");
-
-
 void Segment_prob(map<string, vector<site> >& JOB_LIST, map<string, vector<interval> >& Linear_region, map<string, map<interval, region_numbers> >& regionCov, map<site, map<hidden_state, double> >& prob_matrix_1, map<site, map<hidden_state, double> >& prob_matrix_2, vector<observe>& ALL_SNP, int thread){
+
 	cout << "segmental prob init\n";
 	vector<ID_struct> ID_store;
 	for(map<string, vector<site> >::iterator it = JOB_LIST.begin(); it != JOB_LIST.end(); it++){
@@ -157,10 +149,8 @@ void Initiate(string chr, int b, int e, int ori_flag, map<string, map<interval, 
 }
 
 int Part_Viterbi(string chr, int b, int e, int ori_flag, map<string, map<interval, region_numbers> >& regionCov, map<string, vector<site> >& JOB_LIST, map<site, map<hidden_state, double> >& prob_matrix_1, map<site, map<hidden_state, double> >& prob_matrix_2, vector<observe>& ALL_SNP){// |----------|---------- ori_flag   0 1       2
-	//cout << chr << "\t" << b << "\t" << e << "\t" << ori_flag << endl;
+	// node reduction
 	map<hidden_state, double>Prob, New_Prob, Prob_e;
-	//double P_cov, P_freq;
-	//double trans, local_p;
 	hidden_state temp_state(0,0,0,0);
 	int local_max = regionCov[chr][interval(JOB_LIST[chr][b].begin, JOB_LIST[chr][b].end)].max;
 	int local_min = regionCov[chr][interval(JOB_LIST[chr][b].begin, JOB_LIST[chr][b].end)].min;
@@ -216,7 +206,6 @@ int Part_Viterbi(string chr, int b, int e, int ori_flag, map<string, map<interva
 				}
 				if(b == e){
 					prob_matrix_1[site(chr, b, e, "", -1)][hidden_state(ma,mi,0,0)] = log(Prob[hidden_state(ma,mi,0,0)]);
-					//cout << mi << "\t" << ma << "\t" <<  prob_matrix_1[site(chr, b, e, "", -1)][hidden_state(ma,mi,0,0)] << endl;
 				}
 			}
 			if(local_max >= THRESHHOLD){
@@ -284,7 +273,6 @@ double Optimal(string chr, int b, int e, int MA, int MI, int MA_e, int MI_e, dou
 		local_min_pre = regionCov[chr][interval(JOB_LIST[chr][b].begin, JOB_LIST[chr][b].end)].min;
 		local_max_pre = regionCov[chr][interval(JOB_LIST[chr][b].begin, JOB_LIST[chr][b].end)].max;
 	}
-	//if()
 	int i;
 	if(flag == 0 || flag == 1)
 		_Prob[hidden_state(MA,MI,0,0)]  = log(Prob_b);
@@ -460,13 +448,12 @@ void findSimpleLink(map<CA, CA>& LINK, map<string, map<int, int> >& SV_list_link
 
 
 void LoopyBeliefPropagation(map<string, vector<site> >& JOB_LIST, map<string, map<int, int> >& SV_list_CNV, map<string, map<int, int> >& SV_list_link, map<string, map<int, CA> >& SV_list, map<CA, CA>& LINK , map<site, map<hidden_state, double> >& prob_matrix_1, map<site, map<hidden_state, double> >& prob_matrix_2, map<string, vector<interval> >& Linear_region, int thread){
+	// LBP step to get CN of SVs
 	cout << "LBP\n";
 	string chr1, chr2;
 	int id_1, id_2, id_1_s, id_2_s;
 	string flag1, flag2;
 	int flag_1, flag_2;
-	//for(int s =0; s < 1; s++){
-	//vector<SV_anno> SV_PARALLEL_JOB;
 	for(map<string, map<int, int> >::iterator it = SV_list_link.begin(); it != SV_list_link.end(); it++){
 		chr1 = it->first;
 		for(map<int, int>::iterator it2 = it->second.begin(); it2 != it->second.end(); it2++){
@@ -778,15 +765,7 @@ void SV_anno::Factor(map<string, vector<interval> >& Linear_region, map<string, 
 						else{
 							// if CN is too high, SV CN is hard to define
 							double r1, r2;
-							//if(it1->first.Minor + it1->first.Major > 10){
-							//      r1 = 0.0001/double(it1->first.Minor + it1->first.Major);
-							//      }
-							//      else
 							r1 = 1;
-							//      if(it2->first.Major + it2->first.Minor > 10){
-							//              r2 = 0.0001/double(it2->first.Major + it2->first.Minor);
-							//      }
-							//      else
 							r2 = 1;
 							local_sv_p = r1*(it1->second + it1_s->second) + r2*(it2->second + it2_s->second);
 
@@ -2058,6 +2037,9 @@ void hapBlock::print_hapBlock(map<CA, CA>& LINK, map<string, vector<site> >& JOB
 
 
 void Viterbi_new(map<string, vector<site> >& JOB_LIST, map<string, map<interval, region_numbers> >& regionCov,  map<string, map<int, string> >& SNP_LINK, map<string, map<int, double> >& SNP_1000G, vector<observe>& ALL_SNP, set<site>& SV_FLAG_L, set<site>& SV_FLAG_R, set<site>& LO_L, set<site>& LO_R, map<string, map<int, int> >& SV_list_CNV, vector<int>& REF_ALT_FLAG, map<CA, int>& SV_region_id, int thread, map<string, map<int, CA> > & SV_list, map<CA, CA>& LINK, vector<string>& chr_vec){
+
+	// FAST step to get initial estimate of ASCNG states
+	//
 	ofstream otemp_1("EACH_REGION_1");
 	//provide initial segmentation
 	//findSimpleLink(LINK);
@@ -2198,9 +2180,6 @@ void Viterbi_new(map<string, vector<site> >& JOB_LIST, map<string, map<interval,
 							}
 						}
 						rate_p = max;
-						//if(ma > 2 && ma < 6)
-						//cout << "ri\t" << i << "\t" << ma << "\t" << region_rate << "\t" << rate_p << endl;
-
 					}
 				}
 
@@ -2286,8 +2265,6 @@ void Viterbi_new(map<string, vector<site> >& JOB_LIST, map<string, map<interval,
 					}
 					//if(66520000 <= JOB_LIST[chr][i].begin && JOB_LIST[chr][i].begin <= 66530000){
 				}//mi_pre end
-				//if(local_max_pre >= THRESHHOLD)
-				//	break;
 				if(max_p == 1)
 					cout << chr << "\t" << i << "\t" << JOB_LIST[chr][i].begin << "\t" << JOB_LIST[chr][i].end << "\t" << cov << "\t" << local_max << "\t" << local_min << endl;
 				assert(max_p != 1);// HMM DEAD
@@ -2603,7 +2580,7 @@ void Viterbi_new(map<string, vector<site> >& JOB_LIST, map<string, map<interval,
 	}
 
 void Viterbi_lite(map<string, vector<site> >& JOB_LIST, map<string, map<interval, region_numbers> >& regionCov,  map<string, map<int, string> >& SNP_LINK, map<string, map<int, double> >& SNP_1000G, vector<observe>& ALL_SNP, set<site>& SV_FLAG_L, set<site>& SV_FLAG_R, set<site>& LO_L, set<site>& LO_R, map<string, map<int, int> >& SV_list_CNV, vector<int>& REF_ALT_FLAG, map<CA, int>& SV_region_id, int thread, map<string, map<int, CA> > & SV_list, map<CA, CA>& LINK, map<string, vector<interval> >& Linear_region){
-// no SNV phasing needed
+// no SNV phasing needed, run under LITE mode
 	ofstream otemp("EACH_REGION");
 	vector<string> CHR_LIST;
 	for(map<string, vector<site> >::iterator its = JOB_LIST.begin(); its != JOB_LIST.end(); its++){

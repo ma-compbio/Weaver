@@ -24,9 +24,6 @@ void Viterbi_new(map<string, vector<site> >& JOB_LIST, map<string, map<interval,
 
 void findSimpleLink(map<CA, CA>& LINK,  map<string, map<int, int> >& SV_list_link, map<string, vector<interval> >& Linear_region);
 
-//void Factor(string chr1, int id_1_s, int id_1, string chr2, int id_2_s, int id_2, map<string, vector<interval> >& Linear_region, map<string, vector<site> >& JOB_LIST, map<string, map<int, int> >& SV_list_CNV, map<site, map<hidden_state, double> >& prob_matrix_1, map<site, map<hidden_state, double> >& prob_matrix_2);
-
-
 
 class SV_anno{
 	public:
@@ -40,8 +37,6 @@ class SV_anno{
 		int conflict_flag;
 		string mapping;// 22/22;
 		void Factor(map<string, vector<interval> >& Linear_region, map<string, vector<site> >& JOB_LIST, map<string, map<int, int> >& SV_list_CNV, map<site, map<hidden_state, double> >& prob_matrix_1, map<site, map<hidden_state, double> >& prob_matrix_2);
-		//CA& find_next(CA& sv);
-
 
 };
 
@@ -54,6 +49,7 @@ struct region{//continous region
 };
 
 class hapBlock{
+	// phasing of SVs
 	public:
 		string chr;
 		vector<region> REGION;
@@ -68,7 +64,5 @@ class hapBlock{
 void final_report(map<string, vector<site> >& JOB_LIST,  set<site>& SV_FLAG_L, set<site>& SV_FLAG_R, map<string, map<int, CA> >& SV_list, map<CA,CA>&LINK, vector<observe>& ALL_SNP);
 
 void traversal(hapBlock& hap, map<CA, CA>& LINK);
-
-//map<string, map<interval, class hapBlock> > hapBlock_map;
 
 #endif

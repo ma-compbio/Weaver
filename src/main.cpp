@@ -35,18 +35,18 @@ map<string, map<int, double> > SNP_1000G;
 vector<observe> ALL_SNP;
 map<string, map<interval, string> >LIST, SV_LIST, LONE;
 vector<string> chr_vec; //store chr name with sorted chr size, handle large chr fist!
-map<string, int> RANGE_b, RANGE_e;
-vector<int> REF_ALT_FLAG;
+map<string, int> RANGE_b, RANGE_e; // store the genome size information
+vector<int> REF_ALT_FLAG; // if the higher coverage is from reference or alt allele
 map<string, map<int, CA> > SV_list;
 map<string, map<int, int> > SV_list_link; // chr->pos->region_id
 map<string, map<int, int> > SV_list_CNV;
-map<CA, CA> LINK;
+map<CA, CA> LINK; // Linking SVs
 map<CA, int> SV_region_id;
-map<string, vector<site> > JOB_LIST;
-map<string, map<interval, region_numbers> > regionCov;
-set<site>SV_FLAG_L, SV_FLAG_R, LO_L, LO_R;
+map<string, vector<site> > JOB_LIST;// storing segments
+map<string, map<interval, region_numbers> > regionCov; // coverage of each region
+set<site>SV_FLAG_L, SV_FLAG_R, LO_L, LO_R; // the orientation of SV. L stands for -; R stands for +
 map<site, map<hidden_state, double> > prob_matrix_1, prob_matrix_2;// inward_maxtrix, _prob_matrix_2, _prob_matrix_1;
-map<string, vector<interval> >Linear_region;
+map<string, vector<interval> >Linear_region;// group of JOB_LIST
 map<string, vector<Linear_region_info> >Linear_region_info_vec;
 double version = 0.20;
 string BIN;
@@ -57,7 +57,7 @@ int sys_flag; // = atoi(argv[9]);
 double BB;
 int thread;// number of threads
 
-string MODE;
+string MODE;// RUN mode
 
 static int usage(){
 	cout << "Program: Weaver\n" << version << endl;
@@ -194,6 +194,7 @@ int main_opt(int argc, char *argv[]){
 
 
 int main_ploidy(){
+	// Estimate the ploidy
 	ifstream input1(SVfile);
 	ifstream input2(SNPfile);
 	ifstream input3(GAPfile);
@@ -209,6 +210,7 @@ int main_ploidy(){
 }
 
 int main_lite(){
+	// Core program with SNP phasing disabled
 	ifstream input1(SVfile);
 	ifstream input2(SNPfile);
 	ifstream input3(GAPfile);
@@ -217,17 +219,22 @@ int main_lite(){
 	readSNP(input2,  RANGE_b,  RANGE_e,  ALL_SNP,  REF_ALT_FLAG,  isolatedSNP, LIST);
 	//	readSNP_link(input_snp_link, SNP_LINK);
 	//	readSNP_link_1000G(input5,SNP_1000G);
+	//
+	//Initial partition of the genome
 	Partition( LIST,  JOB_LIST,  SV_FLAG_L,  SV_FLAG_R,  LONE,  LO_L, LO_R,  regionCov, ALL_SNP, RANGE_b, isolatedSNP, SV_list, BIN, FA, mapbd, thread, sys_flag);
+	//Building the cancer genome graph	
 	Job_partition( JOB_LIST,  SV_FLAG_L,  SV_FLAG_R,  LO_L,  LO_R, SV_list_link,  SV_list_CNV,  Linear_region, Linear_region_info_vec );
+	//Estimate the ploidy, normal fraction
 	Estimate_ploidy(BB, JOB_LIST, hap_coverage_lowerbound, hap_coverage_upperbound, Linear_region, Linear_region_info_vec, regionCov, ALL_SNP, thread);
-	cout << "SV copy number done\n";
+	//Annotated simple del and dups
 	findSimpleLink(LINK, SV_list_link, Linear_region);
-	cout << "Viterbi_new\n";
+	//Fast initialization of node states in LBP
 	Viterbi_new(JOB_LIST, regionCov,  SNP_LINK,  SNP_1000G,  ALL_SNP,  SV_FLAG_L,  SV_FLAG_R,  LO_L, LO_R, SV_list_CNV, REF_ALT_FLAG, SV_region_id, thread, SV_list, LINK, chr_vec);
-	cout << "LBP\n";
+	//core LBP step to estimate SV copy number. With multiple implimentations
 	LoopyBeliefPropagation( JOB_LIST, SV_list_CNV,  SV_list_link, SV_list, LINK , prob_matrix_1, prob_matrix_2, Linear_region, thread);
+	//Lite version disable SNP phasing. 
 	Viterbi_lite(JOB_LIST, regionCov,  SNP_LINK,  SNP_1000G,  ALL_SNP,  SV_FLAG_L,  SV_FLAG_R,  LO_L, LO_R, SV_list_CNV, REF_ALT_FLAG, SV_region_id, thread, SV_list, LINK, Linear_region);
-	cout << "LBP done\n";
+	//Final report the ASCNG and ASCNS 
 	final_report(JOB_LIST, SV_FLAG_L, SV_FLAG_R, SV_list, LINK, ALL_SNP);
 	return 0;
 }
@@ -245,7 +252,6 @@ int main(int argc, char *argv[]){
 	//RUN MODE
 	//PLOIDY: Estimate ploidy
 	//LITE: SNP phasing disabled, much faster
-	//
 	cout << "RUN MODE\t" << MODE << endl;
 	return main_opt(argc-1,argv+1);
 	exit(0);
