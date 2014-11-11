@@ -11,7 +11,6 @@
 #include <algorithm>
 #include <sstream>
 #include <stdlib.h>
-#include <cctype>
 #include <math.h>
 #include <omp.h>
 #include <assert.h>
@@ -52,8 +51,12 @@ using namespace std;
 vector<ploidy_seg> WORK_SEG;
 vector<double> disper_vec;
 double lowest = 1000;
+double upper_limit_normal = 30; 
+double upper_limit_tumor = 50, lower_limit_tumor = 10;
 
 void pute(string chr, int id, map<string, vector<site> >& JOB_LIST, map<string, vector<interval> >& Linear_region, map<string, map<interval, region_numbers> >& regionCov, vector<observe>& ALL_SNP, ofstream & o){
+	// computing regional signals
+	//
 	double sum = 0, sum_r = 0, N = 0;
 	double N_r = 0;
 	int range = JOB_LIST[chr][Linear_region[chr][id].end].end - JOB_LIST[chr][Linear_region[chr][id].start].begin;
@@ -148,6 +151,8 @@ void pute(string chr, int id, map<string, vector<site> >& JOB_LIST, map<string, 
 
 void new_Estimate_ploidy(double BB, map<string, vector<site> >& JOB_LIST, int hap_coverage_lowerbound, int hap_coverage_upperbound, map<string, vector<interval> >& Linear_region, map<string, vector<Linear_region_info> >& Linear_region_info_vec, map<string, map<interval, region_numbers> >& regionCov, vector<observe>& ALL_SNP, int thread){//BB input cov
 	// JOB_LIST Linear_region
+	// estimate the normal fraction and the haplotype level coverage of cancer genome
+	//
 	double max = 0;
 	double base_cov;
 	ofstream o("TARGET");
@@ -182,12 +187,11 @@ void new_Estimate_ploidy(double BB, map<string, vector<site> >& JOB_LIST, int ha
 	cout << lowest << endl;
 	double norm, f1, BB_norm, BB_f1, BB_f2;
 	double real_low = -1;
-//4.2     10      7.8
-	//7.2	12	4.2
-	for(norm = 0; norm < 30; norm += 0.2){
+	for(norm = 0; norm < upper_limit_normal; norm += 0.2){
+		// normal coverage should be less than 30!!
 		if(norm*2 - lowest > 5)
 			continue;
-		for(f1 = 10; f1 < 50; f1 += 0.2){
+		for(f1 = lower_limit_tumor; f1 < upper_limit_tumor; f1 += 0.2){
 			if(f1 <= 1.5*norm)
 				continue;
 			if(norm/(norm+2*f1) > 0.5)
@@ -199,18 +203,16 @@ void new_Estimate_ploidy(double BB, map<string, vector<site> >& JOB_LIST, int ha
 #pragma omp parallel for num_threads(thread)
 			for(int ii = 0; ii < S2.size(); ii++){//f2 = 2; f2 < f1*0.8; f2 += 0.2){
 				double f2 = S2[ii];
-				// cout << "SB\t" << norm << endl;
 				if(!(fabs(norm - 6.6) < 0.1 && fabs(f1 - 10)<0.1 && fabs(f2 - 6.8)<0.1 || fabs(norm - 7.2)<0.1 && fabs(f1 - 12)<0.1 && fabs(f2 - 4.2)<0.1)){
 					//continue;
 				}
-				//cout << "SB\t" << norm << endl;
 				if(norm/(norm+f1+f2) > 0.5)
 					continue;
 				if(norm+f1+f2 < 15)
 					continue;
 				double low_sum = 0;
 				for(int i = 0; i < WORK_SEG.size(); i++){
-					if(WORK_SEG[i].rate_density > 0.0003){
+					if(WORK_SEG[i].rate_density > 0.0003){ // need enough SNP sites to call allele frequency
 						double RA;
 						RA = WORK_SEG[i].rate_mean;
 						if(RA > 0.43){
