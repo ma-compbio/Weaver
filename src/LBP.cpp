@@ -2040,7 +2040,7 @@ void Viterbi_new(map<string, vector<site> >& JOB_LIST, map<string, map<interval,
 
 	// FAST step to get initial estimate of ASCNG states
 	//
-	ofstream otemp_1("EACH_REGION_1");
+	//ofstream otemp_1("EACH_REGION_1");
 	//provide initial segmentation
 	//findSimpleLink(LINK);
 	vector<string> CHR_LIST;

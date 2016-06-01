@@ -89,7 +89,7 @@ DATA package:
 ----------------------------
 Weaver
 ----------------------------
-Core PGM program
+Core MRF program
 
 INPUTS:
 	1	SV
@@ -107,7 +107,7 @@ Outputs:
 ----------------------------
 Weaver_lite
 ----------------------------
-Core PGM program, with SNP phasing disabled to speed up
+Core MRF program, with SNP phasing disabled to speed up
 
 INPUTS:
 	1	SV
