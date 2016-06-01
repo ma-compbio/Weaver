@@ -11,13 +11,7 @@ INSTALL
 =========
 
 
-`Bamtools <https://github.com/pezmaster31/bamtools>`_ libraries are needed
-
-	included in Weaver_SV/lib and Weaver_SV/inc
-
-export LD_LIBRARY_PATH=<PREFIX>/Weaver/Weaver_SV/lib/:$LD_LIBRARY_PATH
-
-libz required //-lz flag
+`Bamtools <https://github.com/pezmaster31/bamtools>`_ libraries are needed, included in Weaver_SV/lib and Weaver_SV/inc
 
 `Parallel::ForkManager <http://search.cpan.org/~szabgab/Parallel-ForkManager-1.06/lib/Parallel/ForkManager.pm>`_ perl package is needed
 
@@ -31,7 +25,9 @@ libz required //-lz flag
 
 `Bowtie <http://bowtie-bio.sourceforge.net/index.shtml>`_
 
+``export LD_LIBRARY_PATH=<PREFIX>/Weaver/Weaver_SV/lib/:$LD_LIBRARY_PATH``
 
+``libz required //-lz flag``
 
 
 1	Modify the required BOOST directory in src/Makefile
@@ -68,23 +64,16 @@ solo_ploidy TARGET 2``
 Weaver_SV.pl
 ----------------------------
 SV finding
-Input:
-	BAM file from BWA
 
-Output:
-	VCF file for SV
+* Input: BAM file from BWA
+* Output: VCF file for SV
 
 
 Weaver_pipeline.pl
 ----------------------------
-Master program:
-	1	Generate SV
-	2	Generate other inputs needed for Weaver
+Master program to generate SV together with other inputs needed for Weaver
 
-INPUTS
-
-DATA package:
-	1000 Genomes Project Phase 1 haplotypes
+* Input: 1000 Genomes Project Phase 1 haplotypes
 
 
 
@@ -93,16 +82,15 @@ Weaver
 ----------------------------
 Core MRF program
 
-INPUTS:
-	1	SV
+* Input: SV
+* Outputs:
 
-Outputs:
-	1	Purity and haploid-level sequencing coverage
-	2	Allele specific copy number of genomic regions
-	3	Allele specific copy number of structural variations
-	4	Relative timing of structural variations
-	5	Cancer scaffolds
-	5	Phasing of germline SNPs in CNV regions
+	1.	Purity and haploid-level sequencing coverage
+	2.	Allele specific copy number of genomic regions
+	3.	Allele specific copy number of structural variations
+	4.	Relative timing of structural variations
+	5.	Cancer scaffolds
+	6.	Phasing of germline SNPs in CNV regions
 
 
 
@@ -111,12 +99,13 @@ Weaver_lite
 ----------------------------
 Core MRF program, with SNP phasing disabled to speed up
 
-INPUTS:
-	1	SV
-	2	reference
-	3	Mappability (available for hg19)
-	4	Region (available for hg19)
-	5	wig (from bam)
+* Inputs:
+
+	1.	SV
+	2.	reference
+	3.	Mappability (available for hg19)
+	4.	Region (available for hg19)
+	5.	wig (from bam)
 
 
 
@@ -128,28 +117,23 @@ Weaver PLOIDY
 
 
 
-## INPUTS:
+* Inputs:
 
--f reference file (fasta), should match the reference used in original bam file. Especially for most TCGA datasets, the alignment was performed on //www.broadinstitute.org/ftp/pub/seq/references/Homo_sapiens_assembly19.fasta, which does not have "chr" prefix  [MANDATORY]
-
--S SV file, with format consistent with Weaver_SV. [MANDATORY]
- 
--s SNP file, with ref and alt mappings [MANDATORY]
-
--w wig file from bam, storing the coverage information [MANDATORY]
-
--r 1, if first time running (generating temp files); 0 if want to use existing temp files. [default 1]
-
--m mappability file, download from http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz [MANDATORY]
-
--p number of cores [default 1]
+    * -f reference file (fasta), should match the reference used in original bam file. Especially for most TCGA datasets, the alignment was performed on //www.broadinstitute.org/ftp/pub/seq/references/Homo_sapiens_assembly19.fasta, which does not have "chr" prefix  [MANDATORY]
+    * -S SV file, with format consistent with Weaver_SV. [MANDATORY]
+    * -s SNP file, with ref and alt mappings [MANDATORY]
+    * -w wig file from bam, storing the coverage information [MANDATORY]
+    * -r 1, if first time running (generating temp files); 0 if want to use existing temp files. [default 1]
+    * -m mappability file, download from http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz [MANDATORY]
+    * -p number of cores [default 1]
 
 
 
 FILE FORMAT DECLARITIONS
 -----------------------------
 
-Wiggle file:
+Wiggle file
++++++++++
 
 Wiggle file need to be declared with fixedStep, step 1 and span 1
 fixedStep chrom=chr1 start=9994 step=1 span=1
@@ -166,7 +150,8 @@ Is not allowed
 
 
 
-Bam file:
+Bam file
++++++++++
 
 Must be sorted and indexed.
 
@@ -178,7 +163,8 @@ NGS SNP link file
 1KGP SNP link
 
 
-SV:
+SV
++++++++++
 
 
 Genome region file:
@@ -189,14 +175,19 @@ GAP regions in assembly are annotated.
 Output:
 =========
 
-REGION_CN_PHASE: storing phased allele specific copy number of genome
+REGION_CN_PHASE
++++++++++
+Storing phased allele specific copy number of genome
 
 CHR	BEGIN	END	ALLELE_1_CN	ALLELE_2_CN
 
 
 
 
-SV_CN_PHASE: Structural variation copy number and phasing, catagory
+SV_CN_PHASE
++++++++++
+
+Structural variation copy number and phasing, catagory
 
 CHR_1	POS_1	ORI_1	ALLELE_	CHR_2   POS_2   ORI_2   ALLELE_	CN	germline/somatic_post_aneuploidy/somatic_pre_aneuploidy
 
