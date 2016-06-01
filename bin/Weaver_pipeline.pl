@@ -10,10 +10,7 @@ use Parallel::ForkManager;
 use Cwd 'abs_path';
 
 $RUN_TYPE = shift@ARGV;
-
 $MODEFLAG = shift@ARGV; # SNP:SV:WIG
-
-#@MODE = split(/:/,$FLAG);
 
 print $RUN_TYPE,"\n";
 GetOptions(
@@ -103,13 +100,7 @@ print RUNLOG "$now_string:\tSNP\n";
 #}
 #else{
 
-
-
-
 system("$Bin/pipe.pl $RUN_TYPE $GAP $BAM $FULLFA $P $ONEKG $SEX $TorN");
-
-
-
 
 
 #}
