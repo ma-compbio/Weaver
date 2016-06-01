@@ -119,13 +119,13 @@ Weaver PLOIDY
 
 * Inputs:
 
-    * -f reference file (fasta), should match the reference used in original bam file. Especially for most TCGA datasets, the alignment was performed on //www.broadinstitute.org/ftp/pub/seq/references/Homo_sapiens_assembly19.fasta, which does not have "chr" prefix  [MANDATORY]
-    * -S SV file, with format consistent with Weaver_SV. [MANDATORY]
-    * -s SNP file, with ref and alt mappings [MANDATORY]
-    * -w wig file from bam, storing the coverage information [MANDATORY]
-    * -r 1, if first time running (generating temp files); 0 if want to use existing temp files. [default 1]
-    * -m mappability file, download from http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz [MANDATORY]
-    * -p number of cores [default 1]
+* -f reference file (fasta), should match the reference used in original bam file. Especially for most TCGA datasets, the alignment was performed on //www.broadinstitute.org/ftp/pub/seq/references/Homo_sapiens_assembly19.fasta, which does not have "chr" prefix  [MANDATORY]
+* -S SV file, with format consistent with Weaver_SV. [MANDATORY]
+* -s SNP file, with ref and alt mappings [MANDATORY]
+* -w wig file from bam, storing the coverage information [MANDATORY]
+* -r 1, if first time running (generating temp files); 0 if want to use existing temp files. [default 1]
+* -m mappability file, download from http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz [MANDATORY]
+* -p number of cores [default 1]
 
 
 
