@@ -176,7 +176,7 @@ Output:
 =========
 
 REGION_CN_PHASE
-+++++++++
+-----------------
 Storing phased allele specific copy number of genome
 
 CHR	BEGIN	END	ALLELE_1_CN	ALLELE_2_CN
@@ -185,7 +185,7 @@ CHR	BEGIN	END	ALLELE_1_CN	ALLELE_2_CN
 
 
 SV_CN_PHASE
-+++++++++
+--------------
 
 Structural variation copy number and phasing, catagory
 
