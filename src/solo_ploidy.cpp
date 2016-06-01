@@ -235,24 +235,6 @@ void new_Estimate_ploidy(ifstream& input, int N, int THREAD){//BB input cov N = 
 	}
 	cout << "Disper\t" << disper_cut << endl;
 	cout << "ALL\t" << SIZE << endl;
-
-	//	cout << disper_vec[int((disper_vec.size()-1) * 0.4)] << endl;
-	//	cout << "cutoff_disper = " << disper_cut << endl;
-	//	cout << WORK_SEG.size() << endl;
-	//ESTIMATE fraction
-	//norm/(norm + f1 + f2) < 0.5
-	//f2 < f1*0.8
-	//2*norm <= lowest
-	//0.001 as step
-	//rate > 0.42 ++0.02
-	//norm+f1+f2 > 15
-	//f1 > 10
-	//f2 > 2
-	//f1 > norm
-	//C2 <= C1+1 no overfitting
-	//f1_min == f1_min || f1_ma == f2_ma
-	//
-	//	cout << lowest << endl;
 	double norm, f1, BB_norm, BB_f1, BB_f2;
 	double real_low = -1;
 	for(norm = 0; norm < norm_uplimit; norm += 0.2){
