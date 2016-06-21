@@ -33,7 +33,9 @@ CONTACT
 ###############
 
 Yang Li <leofountain@gmail.com>
+
 Jian Ma's Computational Biology Lab at Carnegie Mellon
+
 The code was developed by Yang Li when the Ma lab was at the University of Illinois at Urbana-Champaign
 
 https://github.com/ma-compbio/Weaver
