@@ -32,11 +32,10 @@ VCF file for SV
 CONTACT
 ###############
 
-Yang Li
-Ma Lab
-Bioengineering Dept., University of Illinois at Urbana-Champaign
+Yang Li <leofountain@gmail.com>
+Jian Ma's Computational Biology Lab at Carnegie Mellon
+The code was developed by Yang Li when the Ma lab was at the University of Illinois at Urbana-Champaign
 
-yangli9@illinois.edu
-https://github.com/leofountain/Weaver
+https://github.com/ma-compbio/Weaver
 
 
