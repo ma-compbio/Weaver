@@ -2,8 +2,6 @@ Weaver
 
 Allele specific base-pair resolution quantification of Strcutrual variations in cancer genome
 
-yangli9@illinois.edu
-
 Version 0.20
 
 
@@ -192,15 +190,12 @@ Structural variation copy number and phasing, catagory
 CHR_1	POS_1	ORI_1	ALLELE_	CHR_2   POS_2   ORI_2   ALLELE_	CN	germline/somatic_post_aneuploidy/somatic_pre_aneuploidy
 
 
-
-
 CONTACT
 ======
 
-
 `Yang Li <leofountain@gmail.com>`_
-Ma Lab
-Bioengineering Dept., University of Illinois at Urbana-Champaign
+Jian Ma's Computational Biology Lab at Carnegie Mellon
+The code was developed by Yang Li when the Ma lab was at the University of Illinois at Urbana-Champaign
 
-https://github.com/leofountain/Weaver
+https://github.com/ma-compbio/Weaver
 
