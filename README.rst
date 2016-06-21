@@ -109,7 +109,7 @@ Core MRF program, with SNP phasing disabled to speed up
 
 
 Weaver PLOIDY
-----------------------------
+-------------------------
 
 ``Weaver PLOIDY -f  -S  -s ../SNP_dens -g GAP_20140416_num -w  -r 1 -m  -p 16``
 
@@ -128,10 +128,10 @@ Weaver PLOIDY
 
 
 FILE FORMAT DECLARITIONS
------------------------------
+---------------------------
 
 Wiggle file
-+++++++++
++++++++++++
 
 Wiggle file need to be declared with fixedStep, step 1 and span 1
 fixedStep chrom=chr1 start=9994 step=1 span=1
@@ -162,7 +162,7 @@ NGS SNP link file
 
 
 SV
-+++++++++
+++++++
 
 
 Genome region file:
@@ -171,10 +171,10 @@ GAP regions in assembly are annotated.
 
 
 Output:
-=========
+=======
 
 REGION_CN_PHASE
-+++++++++
++++++++++++++++
 Storing phased allele specific copy number of genome
 
 CHR	BEGIN	END	ALLELE_1_CN	ALLELE_2_CN
@@ -183,7 +183,7 @@ CHR	BEGIN	END	ALLELE_1_CN	ALLELE_2_CN
 
 
 SV_CN_PHASE
-+++++++++
++++++++++++
 
 Structural variation copy number and phasing, catagory
 
@@ -191,10 +191,10 @@ CHR_1	POS_1	ORI_1	ALLELE_	CHR_2   POS_2   ORI_2   ALLELE_	CN	germline/somatic_po
 
 
 CONTACT
-======
+=======
 
 `Yang Li <leofountain@gmail.com>`_
-Jian Ma's Computational Biology Lab at Carnegie Mellon
+Jian Ma's Computational Genomics Lab at Carnegie Mellon
 The code was developed by Yang Li when the Ma lab was at the University of Illinois at Urbana-Champaign
 
 https://github.com/ma-compbio/Weaver
