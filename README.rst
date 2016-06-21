@@ -1,6 +1,6 @@
-Weaver
+# Weaver
 
-Allele specific base-pair resolution quantification of Strcutrual variations in cancer genome
+## Allele-Specific Quantification of Structural Variations in Cancer Genomes
 
 Version 0.20
 
