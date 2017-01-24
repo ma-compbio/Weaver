@@ -45,7 +45,7 @@ void Linear_region_info::new_set_value(string chr, int id, map<string, vector<si
 			sum_r += ALL_SNP[_id].minor_cov/(ALL_SNP[_id].minor_cov+ALL_SNP[_id].major_cov);
 			rate_vec.push_back(ALL_SNP[_id].minor_cov/(ALL_SNP[_id].minor_cov+ALL_SNP[_id].major_cov));
 			if(ALL_SNP[_id].minor_cov/(ALL_SNP[_id].minor_cov+ALL_SNP[_id].major_cov) != ALL_SNP[_id].minor_cov/(ALL_SNP[_id].minor_cov+ALL_SNP[_id].major_cov))
-				cout << "cao\t" << JOB_LIST[chr][i].begin << "\t" << _id << "\t" << ALL_SNP[_id].pos << "\t" << ALL_SNP[_id].minor_cov << "\t" << ALL_SNP[_id].major_cov << endl;
+				cout << "debug_flag\t" << JOB_LIST[chr][i].begin << "\t" << _id << "\t" << ALL_SNP[_id].pos << "\t" << ALL_SNP[_id].minor_cov << "\t" << ALL_SNP[_id].major_cov << endl;
 			N_r++;
 		}
 		if(int(N)%500 == 0){//pute each region
@@ -111,7 +111,7 @@ void Linear_region_info::set_value(string chr, int id, map<string, vector<site> 
 			sum_r += ALL_SNP[_id].minor_cov/(ALL_SNP[_id].minor_cov+ALL_SNP[_id].major_cov);
 			rate_vec.push_back(ALL_SNP[_id].minor_cov/(ALL_SNP[_id].minor_cov+ALL_SNP[_id].major_cov));
 			if(ALL_SNP[_id].minor_cov/(ALL_SNP[_id].minor_cov+ALL_SNP[_id].major_cov) != ALL_SNP[_id].minor_cov/(ALL_SNP[_id].minor_cov+ALL_SNP[_id].major_cov))
-				cout << "cao\t" << JOB_LIST[chr][i].begin << "\t" << _id << "\t" << ALL_SNP[_id].pos << "\t" << ALL_SNP[_id].minor_cov << "\t" << ALL_SNP[_id].major_cov << endl;
+				cout << "debug_flag\t" << JOB_LIST[chr][i].begin << "\t" << _id << "\t" << ALL_SNP[_id].pos << "\t" << ALL_SNP[_id].minor_cov << "\t" << ALL_SNP[_id].major_cov << endl;
 			N_r++;
 		} 
 	}
