@@ -48,7 +48,7 @@ set<site>SV_FLAG_L, SV_FLAG_R, LO_L, LO_R; // the orientation of SV. L stands fo
 map<site, map<hidden_state, double> > prob_matrix_1, prob_matrix_2;// inward_maxtrix, _prob_matrix_2, _prob_matrix_1;
 map<string, vector<interval> >Linear_region;// group of JOB_LIST
 map<string, vector<Linear_region_info> >Linear_region_info_vec;
-double version = 0.20;
+string version = "0.21";
 string BIN;
 string SVfile, SNPfile, GAPfile;//(argv[1]);
 ifstream input_snp_link;//(argv[4]);
@@ -60,7 +60,7 @@ int thread;// number of threads
 string MODE;// RUN mode
 
 static int usage(){
-	cout << "Program: Weaver\n" << version << endl;
+	cout << "Program: Weaver Version \t" << version << endl;
 	cout << "ALL\tPLOIDY\tLITE\n";
 }
 

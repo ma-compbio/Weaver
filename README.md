@@ -2,7 +2,7 @@
 
 ## Allele-Specific Quantification of Structural Variations in Cancer Genomes
 
-Version 0.20
+Version 0.21
 
 
 INSTALL
@@ -28,9 +28,8 @@ INSTALL
 ``libz required //-lz flag``
  
 
-1	Modify the required BOOST directory in src/Makefile
 
-2	``./INSTALL.sh``
+``./INSTALL.sh``
 
 
 
