@@ -1,12 +1,11 @@
-# Weaver
-
-## Allele-Specific Quantification of Structural Variations in Cancer Genomes
-
+=========================================
+Weaver -- Allele-Specific Quantification of Structural Variations in Cancer Genomes
+=========================================
 Version 0.21
 
 
 INSTALL
-=========
+-------
 
 
 `Bamtools <https://github.com/pezmaster31/bamtools>`_ libraries are needed, included in Weaver_SV/lib and Weaver_SV/inc
@@ -34,7 +33,7 @@ INSTALL
 
 
 DATA
-=========
+-------
 
 
 ``wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz``
@@ -44,14 +43,14 @@ DATA
 
 
 EXAMPLE DATA
-=========
+------------
 
 ``wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_example.tar.gz``
 
 
 
 RUN
-=========
+---
 
 ``Weaver PLOIDY -f SIMU.fa -S FINAL_SV -s SNP -g REGION -w X.bam.wig -r 0 -m map100mer.bd -p 64
 solo_ploidy TARGET 2``
@@ -59,7 +58,7 @@ solo_ploidy TARGET 2``
 
 
 Weaver_SV.pl
-----------------------------
+------------
 SV finding
 
 * Input: BAM file from BWA
@@ -67,7 +66,7 @@ SV finding
 
 
 Weaver_pipeline.pl
-----------------------------
+------------------
 Master program to generate SV together with other inputs needed for Weaver
 
 * Input: 1000 Genomes Project Phase 1 haplotypes
@@ -76,7 +75,7 @@ Master program to generate SV together with other inputs needed for Weaver
 
 
 Weaver
-----------------------------
+------
 Core MRF program
 
 * Input: SV
@@ -93,7 +92,7 @@ Core MRF program
 
 
 Weaver_lite
-----------------------------
+-----------
 Core MRF program, with SNP phasing disabled to speed up
 
 * Inputs:
@@ -108,9 +107,9 @@ Core MRF program, with SNP phasing disabled to speed up
 
 
 Weaver PLOIDY
--------------------------
+-------------
 
-``Weaver PLOIDY -f  -S  -s ../SNP_dens -g GAP_20140416_num -w  -r 1 -m  -p 16``
+  Weaver PLOIDY -f  -S  -s ../SNP_dens -g GAP_20140416_num -w  -r 1 -m  -p 16
 
 
 
