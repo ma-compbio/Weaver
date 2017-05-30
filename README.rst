@@ -112,7 +112,6 @@ Weaver PLOIDY
   Weaver PLOIDY -f  -S  -s ../SNP_dens -g GAP_20140416_num -w  -r 1 -m  -p 16
 
 
-
 * Inputs:
 
     * -f reference file (fasta), should match the reference used in original bam file. Especially for most TCGA datasets, the alignment was performed on //www.broadinstitute.org/ftp/pub/seq/references/Homo_sapiens_assembly19.fasta, which does not have "chr" prefix  [MANDATORY]
