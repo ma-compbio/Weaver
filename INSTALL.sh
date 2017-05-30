@@ -1,8 +1,10 @@
 #!/bin/sh
 
 
-cd src/ ; make ; cd ../
+sudo apt-get install libboost-all-dev
 
-cd Weaver_SV/src/ ; make
+cmake CMakeLists.txt
+
+make
 
 
