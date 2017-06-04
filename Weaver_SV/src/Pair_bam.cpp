@@ -21,8 +21,6 @@
 #include "api/BamAux.h"
 
 // collected discordant reads from paired-end sequencing
-// g++ -I ~/tools/pezmaster31-bamtools-e235c55/include/ -L ~/tools/pezmaster31-bamtools-e235c55/lib/ -o Pair_bam Pair_bam.cpp -lz -lbamtools
-// g++ -I ~/00686048/tools/bamtools/include/ -L ~/00686048/tools/bamtools/lib/ -o Pair_bam Pair_bam.cpp -lz -lbamtools
 using namespace std;
 using namespace BamTools;
 
