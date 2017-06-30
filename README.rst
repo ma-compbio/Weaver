@@ -18,23 +18,15 @@ INSTALLATION
 
 Installing Weaver requires the following dependencies.
 
-`CMake <https://cmake.org>`_
-
-`Bamtools <https://github.com/pezmaster31/bamtools>`_ libraries are needed, included in Weaver_SV/lib and Weaver_SV/inc
-
-`Parallel::ForkManager <http://search.cpan.org/~szabgab/Parallel-ForkManager-1.06/lib/Parallel/ForkManager.pm>`_ perl package is needed
-
-`Bedtools <https://github.com/arq5x/bedtools>`_
-
-`Samtools <http://samtools.sourceforge.net/>`_
-
-`BOOST C++ library <http://www.boost.org/>`_
-
-`BWA <http://bio-bwa.sourceforge.net/>`_
-
-`Bowtie <http://bowtie-bio.sourceforge.net/index.shtml>`_
-
-`libz required //-lz flag`
+    1. `CMake <https://cmake.org>`_
+    2. `Bamtools <https://github.com/pezmaster31/bamtools>`_ libraries are needed, included in Weaver_SV/lib and Weaver_SV/inc
+    3. `Parallel::ForkManager <http://search.cpan.org/~szabgab/Parallel-ForkManager-1.06/lib/Parallel/ForkManager.pm>`_ perl package is needed
+    4. `Bedtools <https://github.com/arq5x/bedtools>`_
+    5. `Samtools <http://samtools.sourceforge.net/>`_
+    6. `BOOST C++ library <http://www.boost.org/>`_
+    7. `BWA <http://bio-bwa.sourceforge.net/>`_
+    8. `Bowtie <http://bowtie-bio.sourceforge.net/index.shtml>`_
+    9. `libz required //-lz flag`
 
 
 In order to install Weaver, we need to run the following commands.::
