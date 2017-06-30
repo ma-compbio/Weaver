@@ -102,7 +102,7 @@ Using Weaver_pipeline.pl
 ++++++++++++++++++++++++
 ::
 
-    ``Usage:
+    Usage:
             ./Weaver_pipeline.pl ALL <mode> \ 
                                 -p/--thread     number of cores
                                 -f/--fa         [MANDATORY] bowtie and bwa reference dir/name
@@ -111,7 +111,7 @@ Using Weaver_pipeline.pl
                                 -o/--output     output dir
                                 -k/--onekg      1000 Gemomes Project data dir
                                 -s/--sex        Female (F) or Male (M). Y chromosome will not be used if the bam is from female tissue.
-                                -h/--help``
+                                -h/--help
 
 ``<mode>`` takes one of the following arguments: ``SV, SNP, WIG``.
 
@@ -119,36 +119,36 @@ Calling SVs
 +++++++++++
 ::
 
-      ``perl $BIN/Weaver_pipeline.pl ALL SV \
+      perl $BIN/Weaver_pipeline.pl ALL SV \
                                -f ${REFDIR} \
                                -g ${GAPALPHA} \
                                -b ${BAM} \
                                -k ${T1000} \
                                -s ${SEX} \
-                               -p ${THREADS}``
+                               -p ${THREADS}
 
 Calling SNVs
 ++++++++++++
 ::
 
-      ``perl $BIN/Weaver_pipeline.pl ALL SNP \
+      perl $BIN/Weaver_pipeline.pl ALL SNP \
                                -f ${REFDIR} \
                                -g ${GAPALPHA} \
                                -b ${BAM} \
                                -k ${T1000} \
                                -s ${SEX} \
-                               -p ${THREADS}``
+                               -p ${THREADS}
 
 Creating WIG file
 +++++++++++++++++
 ::
 
-      ``perl $BIN/Weaver_pipeline.pl ALL WIG \
+      perl $BIN/Weaver_pipeline.pl ALL WIG \
                                -f ${REFDIR} \
                                -g ${GAPALPHA} \
                                -b ${BAM} \
                                -k ${T1000} \
-                               -s ${SEX}``
+                               -s ${SEX}
 
 Finding the haplotype level coverage
 ++++++++++++++++++++++++++++++++++++
@@ -160,14 +160,14 @@ that the variable ``${NEWGAP}`` is equal to ``$GAPALPHA`` if the reference
 FASTA and BAM file have chromosome names with ``chr`` prefixed, and equal to
 ``$GAP`` otherwise.::
 
-    ``Weaver PLOIDY -f ${REFDIR}.fa \
-                    -S ${BAM}.Weaver.GOOD \
-                    -s SNP_dens \
-                    -g ${NEWGAP} \
-                    -w ${BAM}.wig \
-                    -r 1 \
-                    -m $MAP \
-                    -p $THREADS``
+    Weaver PLOIDY -f ${REFDIR}.fa \
+                  -S ${BAM}.Weaver.GOOD \
+                  -s SNP_dens \
+                  -g ${NEWGAP} \
+                  -w ${BAM}.wig \
+                  -r 1 \
+                  -m $MAP \
+                  -p $THREADS
 
 * Inputs:
 
@@ -190,16 +190,16 @@ Finally, in order to obtain the main result, we run the following script. Here,
 we assume that ``${TUMOUR_COV}`` and ``${NORMAL_COV}`` are the tumour and
 normal haplotype level coverage obtained in the previous step respectively.::
 
-    ``Weaver LITE -f ${REFDIR}.fa \
-                  -S ${BAM}.Weaver.GOOD \
-                  -s SNP_dens \
-                  -g ${NEWGAP} \
-                  -w ${BAM}.wig \
-                  -r 1 \
-                  -m $MAP \
-                  -t ${TUMOUR_COV} \
-                  -n ${NORMAL_COV} \
-                  -p $THREADS``
+    Weaver LITE -f ${REFDIR}.fa \
+                -S ${BAM}.Weaver.GOOD \
+                -s SNP_dens \
+                -g ${NEWGAP} \
+                -w ${BAM}.wig \
+                -r 1 \
+                -m $MAP \
+                -t ${TUMOUR_COV} \
+                -n ${NORMAL_COV} \
+                -p $THREADS
 
 
 
