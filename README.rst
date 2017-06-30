@@ -3,7 +3,7 @@ Weaver -- Allele-Specific Quantification of Structural Variations in Cancer Geno
 ===================================================================================
 Version 0.21
 
-OVERVIEW
+Overview
 --------
 Weaver is a tool which, given a whole genome sequencing sample from a tumour
 sample (in BAM format) and reference FASTA file as input, returns
@@ -13,7 +13,7 @@ which takes as auxiliary inputs germline SNP data from the 1000 Genomes
 database, GC content and mappability, and has the phase and copy number of
 genomic loci as hidden states.
 
-INSTALLATION
+Installation
 ------------
 
 Installing Weaver requires the following dependencies.
@@ -47,7 +47,7 @@ Then run the following command.
 
 The Weaver executable will be located in ``bin/`` within the installation directory.
 
-AUXILIARY DATA
+Auxiliary data
 --------------
 
 Weaver requires input data that is available for download.
@@ -59,14 +59,14 @@ The data must be stored in the folder ``data/`` in the installation directory.
 
 
 
-EXAMPLE DATA
+Example data
 ------------
 ::
 
     ``wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_example.tar.gz``
 
 
-RUNNING WEAVER
+Running Weaver
 --------------
 
 We will assume the following input variables, which we need for all the
@@ -249,8 +249,8 @@ Weaver PLOIDY
 
 
 
-FILE FORMAT DECLARITIONS
----------------------------
+File format declaritions
+------------------------
 
 Wiggle file
 +++++++++++
