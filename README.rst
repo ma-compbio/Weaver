@@ -1,10 +1,10 @@
-=========================================
+===================================================================================
 Weaver -- Allele-Specific Quantification of Structural Variations in Cancer Genomes
-=========================================
+===================================================================================
 Version 0.21
 
 OVERVIEW
-------
+--------
 Weaver is a tool which, given a whole genome sequencing sample from a tumour
 sample (in BAM format) and reference FASTA file as input, returns
 allele-specific copy numbers of regions and phased breakpoints of structural
@@ -14,7 +14,7 @@ database, GC content and mappability, and has the phase and copy number of
 genomic loci as hidden states.
 
 INSTALLATION
--------
+------------
 
 Installing Weaver requires the following dependencies.
 
@@ -34,7 +34,7 @@ Installing Weaver requires the following dependencies.
 
 `Bowtie <http://bowtie-bio.sourceforge.net/index.shtml>`_
 
-`libz required //-lz flag`_
+`libz required //-lz flag`
 
 
 In order to install Weaver, we need to run the following commands.
@@ -52,7 +52,7 @@ Then run the following command.
 The Weaver executable will be located in ``bin/`` within the installation directory.
 
 AUXILIARY DATA
--------
+--------------
 
 Weaver requires input data that is available at the following link.
 
@@ -69,7 +69,7 @@ EXAMPLE DATA
 
 
 RUNNING WEAVER
-------------
+--------------
 
 We will assume the following input variables, which we need for all the
 scripts.
@@ -98,7 +98,7 @@ structural variants in the sample. To do this, we will use the perl script
 ``bin/Weaver_pipeline.pl``.
 
 Using Weaver_pipeline.pl
-+++++
+++++++++++++++++++++++++
 ``Usage:
         ./Weaver_pipeline.pl ALL <mode> \
                             -p/--thread     number of cores
@@ -113,7 +113,7 @@ Using Weaver_pipeline.pl
 ``<mode>`` takes one of the following arguments: ``SV, SNP, WIG``.
 
 Calling SVs
-++++++
++++++++++++
 
       ``perl $BIN/Weaver_pipeline.pl ALL SV \
                                -f ${REFDIR} \
@@ -124,7 +124,7 @@ Calling SVs
                                -p ${THREADS}``
 
 Calling SNVs
-++++++
+++++++++++++
 
       ``perl $BIN/Weaver_pipeline.pl ALL SNP \
                                -f ${REFDIR} \
@@ -135,7 +135,7 @@ Calling SNVs
                                -p ${THREADS}``
 
 Creating WIG file
-++++++
++++++++++++++++++
 
       ``perl $BIN/Weaver_pipeline.pl ALL WIG \
                                -f ${REFDIR} \
@@ -145,7 +145,7 @@ Creating WIG file
                                -s ${SEX}``
 
 Finding the haplotype level coverage
-+++
+++++++++++++++++++++++++++++++++++++
 
 The core Weaver program needs haplotype level coverage for the cancer and
 normal genomes as input. We can estimate this using the following command
@@ -178,7 +178,7 @@ This will write the estimated haplotype level normal and tumour coverage to
 ``STDOUT``.
 
 Run Weaver core program
-+++
++++++++++++++++++++++++
 
 Finally, in order to obtain the main result, we run the following script. Here,
 we assume that ``${TUMOUR_COV}`` and ``${NORMAL_COV}`` are the tumour and
@@ -203,14 +203,6 @@ SV finding
 
 * Input: BAM file from BWA
 * Output: VCF file for SV
-
-
-------------------
-Master program to generate SV together with other inputs needed for Weaver
-
-* Input: 1000 Genomes Project Phase 1 haplotypes
-
-
 
 
 Weaver
