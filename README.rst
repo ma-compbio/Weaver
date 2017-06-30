@@ -100,7 +100,7 @@ structural variants in the sample. To do this, we will use the perl script
 Using Weaver_pipeline.pl
 ++++++++++++++++++++++++
 ``Usage:
-        ./Weaver_pipeline.pl ALL <mode> \
+        ./Weaver_pipeline.pl ALL <mode> \ \\
                             -p/--thread     number of cores
                             -f/--fa         [MANDATORY] bowtie and bwa reference dir/name
                             -g/--gap        [MANDATORY] Gap file 
