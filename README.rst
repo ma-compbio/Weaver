@@ -48,7 +48,7 @@ Then run the following command.
 The Weaver executable will be located in ``bin/`` within the installation directory.
 
 Auxiliary data
---------------
+++++++++++++++
 
 Weaver requires input data that is available for download.
 ::
@@ -60,7 +60,7 @@ The data must be stored in the folder ``data/`` in the installation directory.
 
 
 Example data
-------------
+++++++++++++
 ::
 
     ``wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_example.tar.gz``
