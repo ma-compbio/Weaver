@@ -91,6 +91,10 @@ scripts.
     8. ``${THREADS}``: User-specified number of threads the program will run
        on.
 
+We will use ``${BIN}`` as the default directory under which the Weaver
+executables are stored. This will be the full path to the directory ``bin/``
+in the installation.
+
 In order to run Weaver, we must first call the different single nucleotide and
 structural variants in the sample. To do this, we will use the perl script  
 ``bin/Weaver_pipeline.pl``.
@@ -100,7 +104,7 @@ Using Weaver_pipeline.pl
 ::
 
     Usage:
-            ./Weaver_pipeline.pl ALL <mode> \ 
+            $BIN/Weaver_pipeline.pl ALL <mode> \ 
                                 -p/--thread     number of cores
                                 -f/--fa         [MANDATORY] bowtie and bwa reference dir/name
                                 -g/--gap        [MANDATORY] Gap file 
@@ -158,14 +162,14 @@ FASTA and BAM file have chromosome names with ``chr`` prefixed, and equal to
 ``$GAP`` otherwise.
 ::
 
-    Weaver PLOIDY -f ${REFDIR}.fa \
-                  -S ${BAM}.Weaver.GOOD \
-                  -s SNP_dens \
-                  -g ${NEWGAP} \
-                  -w ${BAM}.wig \
-                  -r 1 \
-                  -m $MAP \
-                  -p $THREADS
+    $BIN/Weaver PLOIDY -f ${REFDIR}.fa \
+                       -S ${BAM}.Weaver.GOOD \
+                       -s SNP_dens \
+                       -g ${NEWGAP} \
+                       -w ${BAM}.wig \
+                       -r 1 \
+                       -m $MAP \
+                       -p $THREADS
 
 * Inputs:
 
@@ -189,16 +193,16 @@ we assume that ``${TUMOUR_COV}`` and ``${NORMAL_COV}`` are the tumour and
 normal haplotype level coverage obtained in the previous step respectively.
 ::
 
-    Weaver LITE -f ${REFDIR}.fa \
-                -S ${BAM}.Weaver.GOOD \
-                -s SNP_dens \
-                -g ${NEWGAP} \
-                -w ${BAM}.wig \
-                -r 1 \
-                -m $MAP \
-                -t ${TUMOUR_COV} \
-                -n ${NORMAL_COV} \
-                -p $THREADS
+    $BIN/Weaver LITE -f ${REFDIR}.fa \
+                     -S ${BAM}.Weaver.GOOD \
+                     -s SNP_dens \
+                     -g ${NEWGAP} \
+                     -w ${BAM}.wig \
+                     -r 1 \
+                     -m $MAP \
+                     -t ${TUMOUR_COV} \
+                     -n ${NORMAL_COV} \
+                     -p $THREADS
 
 
 
