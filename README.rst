@@ -52,10 +52,15 @@ EXAMPLE DATA
 RUN
 ---
 Generate a target file for ploidy estimation
+
 ``Weaver PLOIDY -f SIMU.fa -S FINAL_SV -s SNP -g REGION -w X.bam.wig -r 0 -m map100mer.bd -p 64``
+
 Estimate ploidy of normal and tumor
+
 ``solo_ploidy TARGET 2``
+
 Run Weaver core program
+
 ``Weaver LITE -f SIMU.fa -S FINAL_SV -s SNP -g REGION -w X.bam.wig -r 0 -m map100mer.bd -p 64 -t 20 -n 0``
 
 
