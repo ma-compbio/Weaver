@@ -247,7 +247,6 @@ int Partition(map<string, map<interval, string> >& LIST, map<string, vector<site
 	}
 	o.close();
 	cout << "Getting coverage profile...\n";
-	//cmd = BIN+"Distri.pl tempfile";
 	//cmd = "coverageBed -split -hist -abam G48125.TCGA-24-1557-01A-01D-A312-08.2.bam -b tempfile | /home/yangli9/LUNA/LARGE_RUN/cal.pl | sort -k 1,1 -k 2,2n > tempread";
 	long long t = thread;
 	cmd = BIN+"ALL_COV_WIG_BED.pl tempfile " + wig + " " + to_string(t);
