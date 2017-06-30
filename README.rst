@@ -37,26 +37,26 @@ Installing Weaver requires the following dependencies.
 `libz required //-lz flag`
 
 
-In order to install Weaver, we need to run the following commands.
+In order to install Weaver, we need to run the following commands.::
 
-``export LD_LIBRARY_PATH=<PREFIX>/Weaver/Weaver_SV/lib/:$LD_LIBRARY_PATH``
+    ``export LD_LIBRARY_PATH=<PREFIX>/Weaver/Weaver_SV/lib/:$LD_LIBRARY_PATH``
 
 Define variables $BOOST and ${BOOST_OPT} as the locations of your Boost install
 and the linker file for the program options library in boost. The latter is traditionally located at 
 ``$BOOST/bin.v2/libs/program_options/build/gcc-4.8/release/link-static/threading-multi/libboost_program_options.a``
 
-Then run the following command.
+Then run the following command.::
 
-``./INSTALL.sh $BOOST ${BOOST_OPT}``
+    ``./INSTALL.sh $BOOST ${BOOST_OPT}``
 
 The Weaver executable will be located in ``bin/`` within the installation directory.
 
 AUXILIARY DATA
 --------------
 
-Weaver requires input data that is available at the following link.
+Weaver requires input data that is available for download.::
 
-``wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz``
+    ``wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz``
 
 The data must be stored in the folder ``data/`` in the installation directory.
 
@@ -64,8 +64,9 @@ The data must be stored in the folder ``data/`` in the installation directory.
 
 EXAMPLE DATA
 ------------
+::
 
-``wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_example.tar.gz``
+    ``wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_example.tar.gz``
 
 
 RUNNING WEAVER
@@ -99,21 +100,24 @@ structural variants in the sample. To do this, we will use the perl script
 
 Using Weaver_pipeline.pl
 ++++++++++++++++++++++++
-``Usage:
-        ./Weaver_pipeline.pl ALL <mode> \ \\
-                            -p/--thread     number of cores
-                            -f/--fa         [MANDATORY] bowtie and bwa reference dir/name
-                            -g/--gap        [MANDATORY] Gap file 
-                            -b/--bam        bam file
-                            -o/--output     output dir
-                            -k/--onekg      1000 Gemomes Project data dir
-                            -s/--sex        Female (F) or Male (M). Y chromosome will not be used if the bam is from female tissue.
-                            -h/--help``
+::
+
+    ``Usage:
+            ./Weaver_pipeline.pl ALL <mode> \ 
+                                -p/--thread     number of cores
+                                -f/--fa         [MANDATORY] bowtie and bwa reference dir/name
+                                -g/--gap        [MANDATORY] Gap file 
+                                -b/--bam        bam file
+                                -o/--output     output dir
+                                -k/--onekg      1000 Gemomes Project data dir
+                                -s/--sex        Female (F) or Male (M). Y chromosome will not be used if the bam is from female tissue.
+                                -h/--help``
 
 ``<mode>`` takes one of the following arguments: ``SV, SNP, WIG``.
 
 Calling SVs
 +++++++++++
+::
 
       ``perl $BIN/Weaver_pipeline.pl ALL SV \
                                -f ${REFDIR} \
@@ -125,6 +129,7 @@ Calling SVs
 
 Calling SNVs
 ++++++++++++
+::
 
       ``perl $BIN/Weaver_pipeline.pl ALL SNP \
                                -f ${REFDIR} \
@@ -136,6 +141,7 @@ Calling SNVs
 
 Creating WIG file
 +++++++++++++++++
+::
 
       ``perl $BIN/Weaver_pipeline.pl ALL WIG \
                                -f ${REFDIR} \
@@ -152,16 +158,16 @@ normal genomes as input. We can estimate this using the following command
 from the same directory that ``Weaver_pipline.pl`` was executed. Assume
 that the variable ``${NEWGAP}`` is equal to ``$GAPALPHA`` if the reference 
 FASTA and BAM file have chromosome names with ``chr`` prefixed, and equal to
-``$GAP`` otherwise.
+``$GAP`` otherwise.::
 
-``Weaver PLOIDY -f ${REFDIR}.fa \
-                -S ${BAM}.Weaver.GOOD \
-                -s SNP_dens \
-                -g ${NEWGAP} \
-                -w ${BAM}.wig \
-                -r 1 \
-                -m $MAP \
-                -p $THREADS``
+    ``Weaver PLOIDY -f ${REFDIR}.fa \
+                    -S ${BAM}.Weaver.GOOD \
+                    -s SNP_dens \
+                    -g ${NEWGAP} \
+                    -w ${BAM}.wig \
+                    -r 1 \
+                    -m $MAP \
+                    -p $THREADS``
 
 * Inputs:
 
@@ -182,18 +188,18 @@ Run Weaver core program
 
 Finally, in order to obtain the main result, we run the following script. Here,
 we assume that ``${TUMOUR_COV}`` and ``${NORMAL_COV}`` are the tumour and
-normal haplotype level coverage obtained in the previous step respectively.
+normal haplotype level coverage obtained in the previous step respectively.::
 
-``Weaver LITE -f ${REFDIR}.fa \
-              -S ${BAM}.Weaver.GOOD \
-              -s SNP_dens \
-              -g ${NEWGAP} \
-              -w ${BAM}.wig \
-              -r 1 \
-              -m $MAP \
-              -t ${TUMOUR_COV} \
-              -n ${NORMAL_COV} \
-              -p $THREADS``
+    ``Weaver LITE -f ${REFDIR}.fa \
+                  -S ${BAM}.Weaver.GOOD \
+                  -s SNP_dens \
+                  -g ${NEWGAP} \
+                  -w ${BAM}.wig \
+                  -r 1 \
+                  -m $MAP \
+                  -t ${TUMOUR_COV} \
+                  -n ${NORMAL_COV} \
+                  -p $THREADS``
 
 
 
