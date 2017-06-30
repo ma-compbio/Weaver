@@ -29,15 +29,19 @@ Installing Weaver requires the following dependencies.
     9. `libz required //-lz flag`
 
 
-In order to install Weaver, we need to run the following commands.::
+In order to install Weaver, we need to run the following commands.
+::
 
     ``export LD_LIBRARY_PATH=<PREFIX>/Weaver/Weaver_SV/lib/:$LD_LIBRARY_PATH``
 
-Define variables $BOOST and ${BOOST_OPT} as the locations of your Boost install
-and the linker file for the program options library in boost. The latter is traditionally located at 
+Define variables ``$BOOST`` and ``${BOOST_OPT}`` as the locations of your Boost
+install and the linker file for the program options library in boost. The
+latter is traditionally located at:: 
+
 ``$BOOST/bin.v2/libs/program_options/build/gcc-4.8/release/link-static/threading-multi/libboost_program_options.a``
 
-Then run the following command.::
+Then run the following command.
+::
 
     ``./INSTALL.sh $BOOST ${BOOST_OPT}``
 
@@ -46,7 +50,8 @@ The Weaver executable will be located in ``bin/`` within the installation direct
 AUXILIARY DATA
 --------------
 
-Weaver requires input data that is available for download.::
+Weaver requires input data that is available for download.
+::
 
     ``wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz``
 
