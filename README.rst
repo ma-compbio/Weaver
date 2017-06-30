@@ -3,6 +3,8 @@ Weaver -- Allele-Specific Quantification of Structural Variations in Cancer Geno
 =========================================
 Version 0.21
 
+OVERVIEW
+------
 Weaver is a tool which, given a whole genome sequencing sample from a tumour
 sample (in BAM format) and reference FASTA file as input, returns
 allele-specific copy numbers of regions and phased breakpoints of structural
