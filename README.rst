@@ -155,7 +155,8 @@ normal genomes as input. We can estimate this using the following command
 from the same directory that ``Weaver_pipline.pl`` was executed. Assume
 that the variable ``${NEWGAP}`` is equal to ``$GAPALPHA`` if the reference 
 FASTA and BAM file have chromosome names with ``chr`` prefixed, and equal to
-``$GAP`` otherwise.::
+``$GAP`` otherwise.
+::
 
     Weaver PLOIDY -f ${REFDIR}.fa \
                   -S ${BAM}.Weaver.GOOD \
@@ -185,7 +186,8 @@ Run Weaver core program
 
 Finally, in order to obtain the main result, we run the following script. Here,
 we assume that ``${TUMOUR_COV}`` and ``${NORMAL_COV}`` are the tumour and
-normal haplotype level coverage obtained in the previous step respectively.::
+normal haplotype level coverage obtained in the previous step respectively.
+::
 
     Weaver LITE -f ${REFDIR}.fa \
                 -S ${BAM}.Weaver.GOOD \
