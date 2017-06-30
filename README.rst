@@ -3,10 +3,20 @@ Weaver -- Allele-Specific Quantification of Structural Variations in Cancer Geno
 =========================================
 Version 0.21
 
+Weaver is a tool which, given a whole genome sequencing sample from a tumour
+sample (in BAM format) and reference FASTA file as input, returns
+allele-specific copy numbers of regions and phased breakpoints of structural
+variants. The principal model in the framework is a Markov Random Field, 
+which takes as auxiliary inputs germline SNP data from the 1000 Genomes
+database, GC content and mappability, and has the phase and copy number of
+genomic loci as hidden states.
 
-INSTALL
+INSTALLATION
 -------
 
+Installing Weaver requires the following dependencies.
+
+`CMake <https://cmake.org>`_
 
 `Bamtools <https://github.com/pezmaster31/bamtools>`_ libraries are needed, included in Weaver_SV/lib and Weaver_SV/inc
 
@@ -22,23 +32,31 @@ INSTALL
 
 `Bowtie <http://bowtie-bio.sourceforge.net/index.shtml>`_
 
+`libz required //-lz flag`_
+
+
+In order to install Weaver, we need to run the following commands.
+
 ``export LD_LIBRARY_PATH=<PREFIX>/Weaver/Weaver_SV/lib/:$LD_LIBRARY_PATH``
 
-``libz required //-lz flag``
- 
+Define variables $BOOST and ${BOOST_OPT} as the locations of your Boost install
+and the linker file for the program options library in boost. The latter is traditionally located at 
+``$BOOST/bin.v2/libs/program_options/build/gcc-4.8/release/link-static/threading-multi/libboost_program_options.a``
 
+Then run the following command.
 
-``./INSTALL.sh``
+``./INSTALL.sh $BOOST ${BOOST_OPT}``
 
+The Weaver executable will be located in ``bin/`` within the installation directory.
 
-
-DATA
+AUXILIARY DATA
 -------
 
+Weaver requires input data that is available at the following link.
 
 ``wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz``
 
-
+The data must be stored in the folder ``data/`` in the installation directory.
 
 
 
@@ -48,20 +66,133 @@ EXAMPLE DATA
 ``wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_example.tar.gz``
 
 
+RUNNING WEAVER
+------------
 
-RUN
----
-Generate a target file for ploidy estimation
+We will assume the following input variables, which we need for all the
+scripts.
 
-``Weaver PLOIDY -f SIMU.fa -S FINAL_SV -s SNP -g REGION -w X.bam.wig -r 0 -m map100mer.bd -p 64``
+    1. ``${BAM}``: Sorted and indexed BAM file. Index must be present in same
+       directory.
+    2. ``${REFDIR}``: The address and prefix to the reference FASTA file.
+       Exclude the extension (``.fa`` or ``.fasta``). The location must also
+       contain the Bowtie (``*.ebwt``) and BWA indices, with the same prefix.
+       For the sake of exposition, we will assume that the reference FASTA
+       file has extension ``.fa``.
+    3. ``${GAPALPHA}``: The file ``GAP_20140416`` in the ``data/`` directory.
+    4. ``${GAP}``: The file ``GAP_20140416_num`` in the ``data/`` directory.
+       This is the same as ``$GAPALPHA``, but does not have the ``chr`` prefix
+       preceding chromosome names.
+    5. ``${1000G}``: The 1000 Genomes Phase 1 haplotypes data. This can be 
+       obtained from the 1000 Genomes project website.
+    6. ``${SEX}``: The sex of the subject from whom the sample is obtained.
+    7. ``${MAP}``: The file ``wgEncodeCrgMapabilityAlign100mer_number.bd`` in
+         the ``data/`` directory.
+    8. ``${THREADS}``: User-specified number of threads the program will run
+       on.
 
-Estimate ploidy of normal and tumor
+In order to run Weaver, we must first call the different single nucleotide and
+structural variants in the sample. To do this, we will use the perl script  
+``bin/Weaver_pipeline.pl``.
 
-``solo_ploidy TARGET 2``
+Using Weaver_pipeline.pl
++++++
+``Usage:
+        ./Weaver_pipeline.pl ALL <mode> \
+                            -p/--thread     number of cores
+                            -f/--fa         [MANDATORY] bowtie and bwa reference dir/name
+                            -g/--gap        [MANDATORY] Gap file 
+                            -b/--bam        bam file
+                            -o/--output     output dir
+                            -k/--onekg      1000 Gemomes Project data dir
+                            -s/--sex        Female (F) or Male (M). Y chromosome will not be used if the bam is from female tissue.
+                            -h/--help``
+
+``<mode>`` takes one of the following arguments: ``SV, SNP, WIG``.
+
+Calling SVs
+++++++
+
+      ``perl $BIN/Weaver_pipeline.pl ALL SV \
+                               -f ${REFDIR} \
+                               -g ${GAPALPHA} \
+                               -b ${BAM} \
+                               -k ${T1000} \
+                               -s ${SEX} \
+                               -p ${THREADS}``
+
+Calling SNVs
+++++++
+
+      ``perl $BIN/Weaver_pipeline.pl ALL SNP \
+                               -f ${REFDIR} \
+                               -g ${GAPALPHA} \
+                               -b ${BAM} \
+                               -k ${T1000} \
+                               -s ${SEX} \
+                               -p ${THREADS}``
+
+Creating WIG file
+++++++
+
+      ``perl $BIN/Weaver_pipeline.pl ALL WIG \
+                               -f ${REFDIR} \
+                               -g ${GAPALPHA} \
+                               -b ${BAM} \
+                               -k ${T1000} \
+                               -s ${SEX}``
+
+Finding the haplotype level coverage
++++
+
+The core Weaver program needs haplotype level coverage for the cancer and
+normal genomes as input. We can estimate this using the following command
+from the same directory that ``Weaver_pipline.pl`` was executed. Assume
+that the variable ``${NEWGAP}`` is equal to ``$GAPALPHA`` if the reference 
+FASTA and BAM file have chromosome names with ``chr`` prefixed, and equal to
+``$GAP`` otherwise.
+
+``Weaver PLOIDY -f ${REFDIR}.fa \
+                -S ${BAM}.Weaver.GOOD \
+                -s SNP_dens \
+                -g ${NEWGAP} \
+                -w ${BAM}.wig \
+                -r 1 \
+                -m $MAP \
+                -p $THREADS``
+
+* Inputs:
+
+    * -f reference file (fasta), should match the reference used in original bam file. Especially for most TCGA datasets, the alignment was performed on //www.broadinstitute.org/ftp/pub/seq/references/Homo_sapiens_assembly19.fasta, which does not have "chr" prefix  [MANDATORY]
+    * -S SV file, with format consistent with Weaver_SV. [MANDATORY]
+    * -s SNP file, with ref and alt mappings [MANDATORY]
+    * -w wig file from bam, storing the coverage information [MANDATORY]
+    * -r 1, if first time running (generating temp files); 0 if want to use existing temp files. [default 1]
+    * -m mappability file, download from http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz [MANDATORY]
+    * -p number of cores [default 1]
+
+
+This will write the estimated haplotype level normal and tumour coverage to
+``STDOUT``.
 
 Run Weaver core program
++++
 
-``Weaver LITE -f SIMU.fa -S FINAL_SV -s SNP -g REGION -w X.bam.wig -r 0 -m map100mer.bd -p 64 -t 20 -n 0``
+Finally, in order to obtain the main result, we run the following script. Here,
+we assume that ``${TUMOUR_COV}`` and ``${NORMAL_COV}`` are the tumour and
+normal haplotype level coverage obtained in the previous step respectively.
+
+``Weaver LITE -f ${REFDIR}.fa \
+              -S ${BAM}.Weaver.GOOD \
+              -s SNP_dens \
+              -g ${NEWGAP} \
+              -w ${BAM}.wig \
+              -r 1 \
+              -m $MAP \
+              -t ${TUMOUR_COV} \
+              -n ${NORMAL_COV} \
+              -p $THREADS``
+
 
 
 Weaver_SV.pl
@@ -72,7 +203,6 @@ SV finding
 * Output: VCF file for SV
 
 
-Weaver_pipeline.pl
 ------------------
 Master program to generate SV together with other inputs needed for Weaver
 
@@ -117,17 +247,6 @@ Weaver PLOIDY
 -------------
 
   Weaver PLOIDY -f  -S  -s ../SNP_dens -g GAP_20140416_num -w  -r 1 -m  -p 16
-
-
-* Inputs:
-
-    * -f reference file (fasta), should match the reference used in original bam file. Especially for most TCGA datasets, the alignment was performed on //www.broadinstitute.org/ftp/pub/seq/references/Homo_sapiens_assembly19.fasta, which does not have "chr" prefix  [MANDATORY]
-    * -S SV file, with format consistent with Weaver_SV. [MANDATORY]
-    * -s SNP file, with ref and alt mappings [MANDATORY]
-    * -w wig file from bam, storing the coverage information [MANDATORY]
-    * -r 1, if first time running (generating temp files); 0 if want to use existing temp files. [default 1]
-    * -m mappability file, download from http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz [MANDATORY]
-    * -p number of cores [default 1]
 
 
 
