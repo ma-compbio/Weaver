@@ -202,53 +202,6 @@ normal haplotype level coverage obtained in the previous step respectively.
 
 
 
-Weaver_SV.pl
-------------
-SV finding
-
-* Input: BAM file from BWA
-* Output: VCF file for SV
-
-
-Weaver
-------
-Core MRF program
-
-* Input: SV
-* Outputs:
-
-	1.	Purity and haploid-level sequencing coverage
-	2.	Allele specific copy number of genomic regions
-	3.	Allele specific copy number of structural variations
-	4.	Relative timing of structural variations
-	5.	Cancer scaffolds
-	6.	Phasing of germline SNPs in CNV regions
-
-
-
-
-Weaver_lite
------------
-Core MRF program, with SNP phasing disabled to speed up
-
-* Inputs:
-
-	1.	SV
-	2.	reference
-	3.	Mappability (available for hg19)
-	4.	Region (available for hg19)
-	5.	wig (from bam)
-
-
-
-
-Weaver PLOIDY
--------------
-
-  Weaver PLOIDY -f  -S  -s ../SNP_dens -g GAP_20140416_num -w  -r 1 -m  -p 16
-
-
-
 File format declaritions
 ------------------------
 
