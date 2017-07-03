@@ -15,6 +15,10 @@ if [[ "${NNUM}" -eq 1 ]]; then
     SUFF=_num
 fi
 
+if ! [[ ${THREADS} =~ $re ]] ; then
+    THREADS=8
+fi
+
 GAP=${BIN}/../data/GAP_20140416_num
 GAPALPHA=${BIN}/../data/GAP_20140416
 
@@ -24,7 +28,8 @@ for K in ${ARR[@]}; do
     perl $BIN/Weaver_pipeline.pl ALL ${K} \
         -f ${REFDIR} \
         -g ${GAPALPHA} -b ${BAM} \
-        -k ${T1000} -s ${SEX} >weaver_${K} 2>weaver_${K}_error&
+        -k ${T1000} -s ${SEX} \
+        -p $THREADS >weaver_${K} 2>weaver_${K}_error&
 done
 wait
 
@@ -32,7 +37,6 @@ FASTA=${REFDIR}.fasta
 if [ ! -f ${FASTA} ]; then
     FASTA=${REFDIR}.fa
 fi
-
 
 ${BIN}/Weaver PLOIDY \
     -f ${FASTA} \
@@ -52,10 +56,7 @@ re='^[0-9]+([.][0-9]+)?$'
 if ! [[ ${NORMAL_COV} =~ $re ]] ; then
     NORMAL_COV=0
 fi
-if ! [[ ${THREADS} =~ $re ]] ; then
-    THREADS=8
-fi
-NORMAL_COV=0
+#NORMAL_COV=0
 
 ${BIN}/Weaver LITE \
     -f ${FASTA} \
