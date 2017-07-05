@@ -181,11 +181,11 @@ FASTA and BAM file have chromosome names with ``chr`` prefixed, and equal to
     * -m mappability file, download from http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz [MANDATORY]
     * -p number of cores [default 1]
 
-
 * Output:
     * TARGET: File containing haplotype level coverage of different regions
 
-Once this is obtained, we use the following command to obtain the haplotype leel coverage.
+Once this is obtained, we use the following command to obtain the haplotype
+level coverage.
 :: 
 
     $BIN/solo_ploidy TARGET 2
