@@ -28,6 +28,9 @@ Installing Weaver requires the following dependencies.
     8. `Bowtie <http://bowtie-bio.sourceforge.net/index.shtml>`_
     9. `libz required //-lz flag`
 
+We recommended that the system on which Weaver is installed have more than
+40 GB of memory, since Weaver incorporates variant calling. For small inputs,
+depending on the number of process threads, the memory used can be much lower.
 
 In order to install Weaver, we need to run the following commands.
 ::
