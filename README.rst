@@ -182,8 +182,16 @@ FASTA and BAM file have chromosome names with ``chr`` prefixed, and equal to
     * -p number of cores [default 1]
 
 
-This will write the estimated haplotype level normal and tumour coverage to
-``STDOUT``.
+* Output:
+    * TARGET: File containing haplotype level coverage of different regions
+
+Once this is obtained, we use the following command to obtain the haplotype leel coverage.
+:: 
+
+    $BIN/solo_ploidy TARGET 2
+
+The ``2`` here indicates a diploid normal genome. This will write the estimated
+haplotype level normal and tumour coverage to ``STDOUT``.
 
 Run Weaver core program
 +++++++++++++++++++++++
