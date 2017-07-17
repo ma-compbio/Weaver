@@ -53,9 +53,9 @@ CANCER_COV=`grep "Tumor Haplotype Coverage" coverage_estimates| cut -d ':' -f 2`
 NORMAL_COV=`grep "Normal Haplotype Coverage" coverage_estimates | cut -d ':' -f 2`  #`cat ${BAM}.coverage`
 
 re='^[0-9]+([.][0-9]+)?$'
-if ! [[ ${NORMAL_COV} =~ $re ]] ; then
-    NORMAL_COV=0
-fi
+#if ! [[ ${NORMAL_COV} =~ $re ]] ; then
+#    NORMAL_COV=0
+#fi
 #NORMAL_COV=0
 
 ${BIN}/Weaver LITE \
