@@ -16,7 +16,7 @@ const double GC_mean = 0.4;//0.4
 const double MAP_min = 0.4 ;// DO HAVE IMPACT ON PHASING ACCURACY 0.6
 const int THRESHHOLD = 40;
 const double Disp = 2.0;//2.8;
-const int tileSize = 1000;
+const int tileSize = 5000;
 const int max_cov = 8;
 //extern double base_cov;
  
