@@ -38,11 +38,17 @@ if [ ! -f ${FASTA} ]; then
     FASTA=${REFDIR}.fa
 fi
 
+MAP=${BIN}/../data/wgEncodeCrgMapabilityAlign100mer_number.bd
+#MAPALPHA=${BIN}/../data/wgEncodeCrgMapabilityAlign100mer.bd
+if [[ "${NNUM}" -eq 1 ]]; then
+    MAP=${BIN}/../data/wgEncodeCrgMapabilityAlign100mer.bd
+fi
+
 ${BIN}/Weaver PLOIDY \
     -f ${FASTA} \
     -s SNP_dens \
     -S ${BAM}.Weaver.GOOD -g ${GAP%$SUFF} \
-    -m ${BIN}/../data/wgEncodeCrgMapabilityAlign100mer_number.bd \
+    -m $MAP \ #${BIN}/../data/wgEncodeCrgMapabilityAlign100mer_number.bd \
     -w ${BAM}.wig -r 1 \
     -p ${THREADS} >weaver_ploidy 2>weaver_ploidy_error
     #-t ${CANCER_COV} -n ${NORMAL_COV} \
