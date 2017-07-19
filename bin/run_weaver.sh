@@ -48,7 +48,7 @@ ${BIN}/Weaver PLOIDY \
     -f ${FASTA} \
     -s SNP_dens \
     -S ${BAM}.Weaver.GOOD -g ${GAP%$SUFF} \
-    -m $MAP \ #${BIN}/../data/wgEncodeCrgMapabilityAlign100mer_number.bd \
+    -m $MAP \
     -w ${BAM}.wig -r 1 \
     -p ${THREADS} >weaver_ploidy 2>weaver_ploidy_error
     #-t ${CANCER_COV} -n ${NORMAL_COV} \
@@ -68,7 +68,7 @@ ${BIN}/Weaver LITE \
     -f ${FASTA} \
     -s SNP_dens \
     -S ${BAM}.Weaver.GOOD -g ${GAP%$SUFF} \
-    -m ${BIN}/../data/wgEncodeCrgMapabilityAlign100mer_number.bd \
+    -m $MAP \
     -w ${BAM}.wig -r 1 \
     -t ${CANCER_COV} -n ${NORMAL_COV} \
     -p  ${THREADS} >weaver_lite 2>weaver_lite_error
