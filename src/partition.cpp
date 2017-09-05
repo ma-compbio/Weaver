@@ -51,7 +51,7 @@ using namespace std;
 string mapbd, FA, wig;
 
 
-int Partition(map<string, map<interval, string> >& LIST, map<string, vector<site> >& JOB_LIST, set<site>& SV_FLAG_L, set<site>& SV_FLAG_R, map<string, map<interval, string> >& LONE, set<site>& LO_L, set<site>& LO_R, map<string, map<interval, region_numbers> >& regionCov, vector<observe>& ALL_SNP, map<string, int>& RANGE_b, map<string, map<int, int> >& isolatedSNP, map<string, map<int, CA> >& SV_list, string BIN, string FA, string mapbd, int thread, int sys_flag){
+int Partition(map<string, map<interval, string> >& LIST, map<string, vector<site> >& JOB_LIST, set<site>& SV_FLAG_L, set<site>& SV_FLAG_R, map<string, map<interval, string> >& LONE, set<site>& LO_L, set<site>& LO_R, map<string, map<interval, region_numbers> >& regionCov, vector<observe>& ALL_SNP, map<string, int>& RANGE_b, map<string, map<int, int> >& isolatedSNP, map<string, map<int, CA> >& SV_list, string BIN, string FA, string mapbd, int tileSize, int thread, int sys_flag){
 	//input: LIST RANGE_b JOB_LIST site(struct)  LO_L LONE SV_FLAG_L  LO_R SV_FLAG_R regionCov ALL_SNP
 	int temp_pos;
 	set<site>SV_FLAG_ALL;

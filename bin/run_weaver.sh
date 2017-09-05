@@ -5,11 +5,16 @@ REFDIR=$2
 T1000=$3
 SEX=$4
 NORMAL_COV=$5
-THREADS=$6
-NNUM=$7
+TILE_SIZE=$6
+THREADS=$7
+NNUM=$8
 
 BIN="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export LD_LIBRARY_PATH=${BIN}/../Weaver_SV/lib:${LD_LIBRARY_PATH}
+
+if ! [[ ${TILE_SIZE} =~ $re ]] ; then
+    TILE_SIZE=8
+fi
 
 if [[ "${NNUM}" -eq 1 ]]; then
     SUFF=_num
@@ -50,6 +55,7 @@ ${BIN}/Weaver PLOIDY \
     -S ${BAM}.Weaver.GOOD -g ${GAP%$SUFF} \
     -m $MAP \
     -w ${BAM}.wig -r 1 \
+    -z ${TILE_SIZE} \
     -p ${THREADS} >weaver_ploidy 2>weaver_ploidy_error
     #-t ${CANCER_COV} -n ${NORMAL_COV} \
 
@@ -71,4 +77,5 @@ ${BIN}/Weaver LITE \
     -m $MAP \
     -w ${BAM}.wig -r 1 \
     -t ${CANCER_COV} -n ${NORMAL_COV} \
+    -z ${TILE_SIZE} \
     -p  ${THREADS} >weaver_lite 2>weaver_lite_error
