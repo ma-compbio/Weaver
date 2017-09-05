@@ -56,6 +56,7 @@ ifstream input5;//(argv[5]);
 int sys_flag; // = atoi(argv[9]);
 double BB;
 int thread;// number of threads
+int tileSize;// number of threads
 
 string MODE;// RUN mode
 
@@ -84,6 +85,7 @@ int main_opt(int argc, char *argv[]){
 		("NORMAL,n", po::value<double>(), "normal")
 		("TUMOR,t", po::value<double>(), "tumor")
 		("RUNFLAG,r", po::value<int>(), "[MANDATORY] run flag 1: from start; 0: region files already there")
+		("TILESIZE,z", po::value<int>(), "[DEFAULT 5000] size of genome partition")
 		("help,h", "print help message")
 		;
 	if(argc <= 1){
@@ -105,6 +107,14 @@ int main_opt(int argc, char *argv[]){
 	else{
 		cout << "THREAD = 8\n";
 		thread = 8;
+	}
+	if (vm.count("TILESIZE")) {
+		cout << "TILESIZE was set to " << vm["TILESIZE"].as<int>() << ".\n";
+		tileSize = vm["TILESIZE"].as<int>();
+	}
+	else{
+		cout << "TILESIZE = 5000\n";
+		thread = 5000;
 	}
 	if (vm.count("FASTA")) {
 		cout << "FASTA was set to " << vm["FASTA"].as<string>() << ".\n";
@@ -201,7 +211,7 @@ int main_ploidy(){
 	readRange(input3, RANGE_b, RANGE_e, LIST, chr_vec);
 	readSV(input1, RANGE_b,  RANGE_e,  LIST,  LONE, SV_LIST, SV_list, LINK);
 	readSNP(input2,  RANGE_b,  RANGE_e,  ALL_SNP,  REF_ALT_FLAG,  isolatedSNP, LIST);
-	Partition( LIST,  JOB_LIST,  SV_FLAG_L,  SV_FLAG_R,  LONE,  LO_L, LO_R,  regionCov, ALL_SNP, RANGE_b, isolatedSNP, SV_list, BIN, FA, mapbd, thread, sys_flag);
+	Partition( LIST,  JOB_LIST,  SV_FLAG_L,  SV_FLAG_R,  LONE,  LO_L, LO_R,  regionCov, ALL_SNP, RANGE_b, isolatedSNP, SV_list, BIN, FA, mapbd, tileSize, thread, sys_flag);
 	Job_partition( JOB_LIST,  SV_FLAG_L,  SV_FLAG_R,  LO_L,  LO_R, SV_list_link,  SV_list_CNV,  Linear_region, Linear_region_info_vec );
 	new_Estimate_ploidy(BB, JOB_LIST, hap_coverage_lowerbound, hap_coverage_upperbound, Linear_region, Linear_region_info_vec, regionCov, ALL_SNP, thread);
 	cout << "Estimated cancer haplotype coverage:\t" << best_cov << "\n";
@@ -221,7 +231,7 @@ int main_lite(){
 	//	readSNP_link_1000G(input5,SNP_1000G);
 	//
 	//Initial partition of the genome
-	Partition( LIST,  JOB_LIST,  SV_FLAG_L,  SV_FLAG_R,  LONE,  LO_L, LO_R,  regionCov, ALL_SNP, RANGE_b, isolatedSNP, SV_list, BIN, FA, mapbd, thread, sys_flag);
+	Partition( LIST,  JOB_LIST,  SV_FLAG_L,  SV_FLAG_R,  LONE,  LO_L, LO_R,  regionCov, ALL_SNP, RANGE_b, isolatedSNP, SV_list, BIN, FA, mapbd, tileSize, thread, sys_flag);
 	//Building the cancer genome graph	
 	Job_partition( JOB_LIST,  SV_FLAG_L,  SV_FLAG_R,  LO_L,  LO_R, SV_list_link,  SV_list_CNV,  Linear_region, Linear_region_info_vec );
 	//Estimate the ploidy, normal fraction
