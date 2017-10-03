@@ -19,7 +19,7 @@ $TorN = shift@ARGV;
 #system("samtools view -H $BAM | grep \"\\\@SQ\" | sed 's/^.*SN://g' | cut -f 1 |  xargs -I {} -n 1 -P 40 bash -c \"samtools mpileup -Q0 -d 100000 -uf $FA -r {} $BAM | bcftools view -vcg - > tmp.{}.vcf\"");
 system("$EXT/samtools view -H $BAM | $Bin/bamHead2Genome_std.pl $SEX |  xargs -I {} -n 1 -P $P bash -c \"$EXT/samtools mpileup -Q0 -d 100000 -uf $FA -r {} $BAM | $EXT/bcftools view -vcg - > tmp.{}.vcf\"");
 system("cat tmp*.vcf | $Bin/mergeVCF.pl > VCF; rm tmp*.vcf");
-if($TorN eq "T"){
+if($TorN eq "T" || !$TorN){
 	system("$Bin/vcf2SNVlist.pl VCF | $Bin/clean_vcf.pl 8 | $Bin/check_GAP.pl $REGION > SNP");
 }
 if($TorN eq "N"){

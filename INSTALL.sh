@@ -1,8 +1,13 @@
 #!/bin/sh
 
 
-cd src/ ; make ; cd ../
+#sudo apt-get install libboost-all-dev
 
-cd Weaver_SV/src/ ; make
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+BIN=$ROOT/bin
+export LD_LIBRARY_PATH=${BIN}/../Weaver_SV/lib:${LD_LIBRARY_PATH}
+cmake CMakeLists.txt
+
+make
 
 

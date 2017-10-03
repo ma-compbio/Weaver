@@ -51,7 +51,7 @@ using namespace std;
 string mapbd, FA, wig;
 
 
-int Partition(map<string, map<interval, string> >& LIST, map<string, vector<site> >& JOB_LIST, set<site>& SV_FLAG_L, set<site>& SV_FLAG_R, map<string, map<interval, string> >& LONE, set<site>& LO_L, set<site>& LO_R, map<string, map<interval, region_numbers> >& regionCov, vector<observe>& ALL_SNP, map<string, int>& RANGE_b, map<string, map<int, int> >& isolatedSNP, map<string, map<int, CA> >& SV_list, string BIN, string FA, string mapbd, int thread, int sys_flag){
+int Partition(map<string, map<interval, string> >& LIST, map<string, vector<site> >& JOB_LIST, set<site>& SV_FLAG_L, set<site>& SV_FLAG_R, map<string, map<interval, string> >& LONE, set<site>& LO_L, set<site>& LO_R, map<string, map<interval, region_numbers> >& regionCov, vector<observe>& ALL_SNP, map<string, int>& RANGE_b, map<string, map<int, int> >& isolatedSNP, map<string, map<int, CA> >& SV_list, string BIN, string FA, string mapbd, int tileSize, int thread, int sys_flag){
 	//input: LIST RANGE_b JOB_LIST site(struct)  LO_L LONE SV_FLAG_L  LO_R SV_FLAG_R regionCov ALL_SNP
 	int temp_pos;
 	set<site>SV_FLAG_ALL;
@@ -247,7 +247,6 @@ int Partition(map<string, map<interval, string> >& LIST, map<string, vector<site
 	}
 	o.close();
 	cout << "Getting coverage profile...\n";
-	//cmd = BIN+"Distri.pl tempfile";
 	//cmd = "coverageBed -split -hist -abam G48125.TCGA-24-1557-01A-01D-A312-08.2.bam -b tempfile | /home/yangli9/LUNA/LARGE_RUN/cal.pl | sort -k 1,1 -k 2,2n > tempread";
 	long long t = thread;
 	cmd = BIN+"ALL_COV_WIG_BED.pl tempfile " + wig + " " + to_string(t);

@@ -72,7 +72,7 @@ void pute(string chr, int id, map<string, vector<site> >& JOB_LIST, map<string, 
 			sum_r += ALL_SNP[_id].minor_cov/(ALL_SNP[_id].minor_cov+ALL_SNP[_id].major_cov);
 			rate_vec.push_back(ALL_SNP[_id].minor_cov/(ALL_SNP[_id].minor_cov+ALL_SNP[_id].major_cov));
 			if(ALL_SNP[_id].minor_cov/(ALL_SNP[_id].minor_cov+ALL_SNP[_id].major_cov) != ALL_SNP[_id].minor_cov/(ALL_SNP[_id].minor_cov+ALL_SNP[_id].major_cov))
-				cout << "cao\t" << JOB_LIST[chr][i].begin << "\t" << _id << "\t" << ALL_SNP[_id].pos << "\t" << ALL_SNP[_id].minor_cov << "\t" << ALL_SNP[_id].major_cov << endl;
+				cout << "debug_flag\t" << JOB_LIST[chr][i].begin << "\t" << _id << "\t" << ALL_SNP[_id].pos << "\t" << ALL_SNP[_id].minor_cov << "\t" << ALL_SNP[_id].major_cov << endl;
 			N_r++;
 		}
 		if(int(N)%500 == 0){//pute each region
@@ -203,7 +203,7 @@ void new_Estimate_ploidy(ifstream& input, int N, int THREAD){//BB input cov N = 
 		}
 		else{
 			if(temp_chr != ""){
-				cout << "xxx\t" << temp_chr << "\t" << temp_b << "\t" << temp_e << "\t" << temp_length << "\t" << temp_mean << "\t" << temp_rate_mean << endl;
+				//cout << "xxx\t" << temp_chr << "\t" << temp_b << "\t" << temp_e << "\t" << temp_length << "\t" << temp_mean << "\t" << temp_rate_mean << endl;
 			}
 			temp_SUM = 0;
 			temp_N = 0;
@@ -233,8 +233,8 @@ void new_Estimate_ploidy(ifstream& input, int N, int THREAD){//BB input cov N = 
 			continue;
 		SIZE++;
 	}
-	cout << "Disper\t" << disper_cut << endl;
-	cout << "ALL\t" << SIZE << endl;
+	cout << "Estimated Dispersion\t" << disper_cut << endl;
+//	cout << "ALL\t" << SIZE << endl;
 	double norm, f1, BB_norm, BB_f1, BB_f2;
 	double real_low = -1;
 	for(norm = 0; norm < norm_uplimit; norm += 0.2){
@@ -348,7 +348,8 @@ void new_Estimate_ploidy(ifstream& input, int N, int THREAD){//BB input cov N = 
 			}
 			}
 		}
-		cout << BB_norm << "\t" << BB_f1 << "\t" << BB_f2 << "\t" << real_low << "\n";
+		cout << "Normal Haplotype Coverage: " << BB_norm << "\n" << "Tumor Haplotype Coverage: " << BB_f1 << "\n";
+//        cout << BB_f2 << "\t" << real_low << "\n";
 //		BB_norm = 2.2;
 //		BB_f1 = 22;
 //		BB_f2 = 0;
@@ -410,10 +411,10 @@ void new_Estimate_ploidy(ifstream& input, int N, int THREAD){//BB input cov N = 
 					}
 				}
 			}
-			cout << WORK_SEG[i].chr << "\t" << WORK_SEG[i].begin << "\t" << WORK_SEG[i].end << "\t" << WORK_SEG[i].mean << "\t" << WORK_SEG[i].rate_mean << "\t" << WORK_SEG[i].mean*RA << "\t" << f1_mi_f << "\t" << f1_ma_f << "\t" << f2_mi_f << "\t" << f2_ma_f << "\t" << local_min << endl;
+			//cout << WORK_SEG[i].chr << "\t" << WORK_SEG[i].begin << "\t" << WORK_SEG[i].end << "\t" << WORK_SEG[i].mean << "\t" << WORK_SEG[i].rate_mean << "\t" << WORK_SEG[i].mean*RA << "\t" << f1_mi_f << "\t" << f1_ma_f << "\t" << f2_mi_f << "\t" << f2_ma_f << "\t" << local_min << endl;
 			low_min += local_min;
 		}
-		cout << low_min << "\n";
+		//cout << low_min << "\n";
 
 	}
 	int main(int argc, char *argv[]){

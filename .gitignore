@@ -1,0 +1,5 @@
+# Created by .ignore support plugin (hsz.mobi)
+cmake-build-debug/
+.idea/
+.gitignore
+/Weaver_SV/bamtools/
