@@ -55,8 +55,6 @@ while(<STDIN>){
 			next;
 		}
 	}
-
-	#push @{$hash{"$m[0]\t$m[2]\t$m[3]\t$m[4]"}}, [$m[1], $m[4]];
 	print $_,"\n";
 }
 

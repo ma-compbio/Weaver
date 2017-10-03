@@ -32,7 +32,7 @@ GetOptions(
 $VERSION = 1.0;
 #################################
 
-if($BAM eq "" || $help || $FA eq "" || $ONEKG eq "" || $GAP eq ""){
+if($BAM eq "" || $help || $FA eq "" || $ONEKG eq ""){
         if(defined $FA && ! -e "$FA.fa"){
                 print "$FA.fa does not exist\n";
         }
@@ -67,7 +67,7 @@ if(!(-e $FULLFA)){
 
 
 $P = $P || 50; # default thread
-$TorN || "T"; # default tumor sample
+$TorN = $TorN || "T"; # default tumor sample
 $SEX = $SEX || "F"; # default female Y discard
 $GAP = $GAP || "$Bin/../data/GAP_20140416";
 
