@@ -170,6 +170,7 @@ FASTA and BAM file have chromosome names with ``chr`` prefixed, and equal to
                        -s SNP_dens \
                        -g ${NEWGAP} \
                        -w ${BAM}.wig \
+                       -z ${TILESIZE} \
                        -r 1 \
                        -m $MAP \
                        -p $THREADS
@@ -180,6 +181,7 @@ FASTA and BAM file have chromosome names with ``chr`` prefixed, and equal to
     * -S SV file, with format consistent with Weaver_SV. [MANDATORY]
     * -s SNP file, with ref and alt mappings [MANDATORY]
     * -w wig file from bam, storing the coverage information [MANDATORY]
+    * -z tile size argument: positive integer size to partition genome. [default 5000]
     * -r 1, if first time running (generating temp files); 0 if want to use existing temp files. [default 1]
     * -m mappability file, download from http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz [MANDATORY]
     * -p number of cores [default 1]
@@ -187,8 +189,8 @@ FASTA and BAM file have chromosome names with ``chr`` prefixed, and equal to
 * Output:
     * TARGET: File containing haplotype level coverage of different regions
 
-Once this is obtained, we use the following command to obtain the haplotype
-level coverage.
+The tile size argument must be set by trial and error, so that the ``TARGETi`` file is properly populated. The argument varies from sample to sample, but the usual range is from 500 to 5000, with 1000 being common for TCGA samples.
+Once this is obtained, we use the following command to obtain the haplotype level coverage.
 :: 
 
     $BIN/solo_ploidy TARGET 2
@@ -209,6 +211,7 @@ normal haplotype level coverage obtained in the previous step respectively.
                      -s SNP_dens \
                      -g ${NEWGAP} \
                      -w ${BAM}.wig \
+                     -z ${TILESIZE} \
                      -r 1 \
                      -m $MAP \
                      -t ${TUMOUR_COV} \
