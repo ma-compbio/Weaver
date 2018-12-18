@@ -64,9 +64,12 @@ The data must be stored in the folder ``data/`` in the installation directory.
 
 Example data
 ++++++++++++
+
+An example for running the core Weaver program is given at the following link.
+Download the entire folder into the Weaver directory. To run the example, just run ``. cmd.sh``
 ::
 
-    ``wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_example.tar.gz``
+    ``http://genome.compbio.cs.cmu.edu/~ashokr/data/Weaver_example``
 
 
 Running Weaver
