@@ -69,7 +69,7 @@ An example for running the core Weaver program is given at the following link.
 Download the entire folder into the Weaver directory. To run the example, just run ``. cmd.sh``
 ::
 
-    ``http://genome.compbio.cs.cmu.edu/~ashokr/data/Weaver_example``
+    ``http://genome.compbio.cs.cmu.edu/~ashokr/data/Weaver_example.tar``
 
 
 Running Weaver
