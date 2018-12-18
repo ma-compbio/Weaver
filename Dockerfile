@@ -84,7 +84,7 @@ WORKDIR /opt/Weaver/bin
 
 # Downloading necessary data
 WORKDIR /opt/Weaver/data
-RUN wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz
+RUN wget http://genome.compbio.cs.cmu.edu/~ashokr/data/Weaver_data.tar.gz
 RUN tar -xvzf Weaver_data.tar.gz
 RUN mv Weaver_data/* .
 RUN rm -r Weaver_data
@@ -96,7 +96,9 @@ RUN rm -r Weaver_data
 #
 ## Installing bwa 
 #WORKDIR /opt
-#RUN wget http://downloads.sourceforge.net/project/bio-bwa/bwa-0.7.15.tar.bz2
+#RUN 
+
+http://downloads.sourceforge.net/project/bio-bwa/bwa-0.7.15.tar.bz2
 #RUN tar -xjf bwa-0.7.15.tar.bz2
 #WORKDIR /opt/bwa-0.7.15
 #RUN make
