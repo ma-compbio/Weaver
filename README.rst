@@ -50,6 +50,7 @@ Then run the following command.
 
 The Weaver executable will be located in ``bin/`` within the installation directory.
 
+<<<<<<< HEAD
 Auxiliary data
 ++++++++++++++
 
@@ -59,6 +60,17 @@ Weaver requires input data that is available for download.
     ``wget http://genome.compbio.cs.cmu.edu/~ashokr/data/Weaver_data.tar.gz``
 
 The individual files must be stored in the folder ``data/`` in the installation directory.
+=======
+.. Auxiliary data
+.. ++++++++++++++
+.. 
+.. Weaver requires input data that is available for download.
+.. ::
+.. 
+..     ``wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz``
+.. 
+.. The data must be stored in the folder ``data/`` in the installation directory.
+>>>>>>> 16763a1c5740c3d3aeeed27886742bb20d7c44a5
 
 
 
