@@ -50,7 +50,7 @@ Then run the following command.
 
 The Weaver executable will be located in ``bin/`` within the installation directory.
 
-<<<<<<< HEAD
+
 Auxiliary data
 ++++++++++++++
 
@@ -60,17 +60,6 @@ Weaver requires input data that is available for download.
     ``wget http://genome.compbio.cs.cmu.edu/~ashokr/data/Weaver_data.tar.gz``
 
 The individual files must be stored in the folder ``data/`` in the installation directory.
-=======
-.. Auxiliary data
-.. ++++++++++++++
-.. 
-.. Weaver requires input data that is available for download.
-.. ::
-.. 
-..     ``wget http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz``
-.. 
-.. The data must be stored in the folder ``data/`` in the installation directory.
->>>>>>> 16763a1c5740c3d3aeeed27886742bb20d7c44a5
 
 
 
@@ -198,7 +187,7 @@ FASTA and BAM file have chromosome names with ``chr`` prefixed, and equal to
     * -w wig file from bam, storing the coverage information [MANDATORY]
     * -z tile size argument: positive integer size to partition genome. [default 5000]
     * -r 1, if first time running (generating temp files); 0 if want to use existing temp files. [default 1]
-    * -m mappability file, download from http://bioen-compbio.bioen.illinois.edu/weaver/Weaver_data.tar.gz [MANDATORY]
+    * -m mappability file, extract from ``http://genome.compbio.cs.cmu.edu/~ashokr/data/Weaver_data.tar.gz`` [MANDATORY]
     * -p number of cores [default 1]
 
 * Output:
@@ -211,6 +200,7 @@ Once this is obtained, we use the following command to obtain the haplotype leve
     $BIN/solo_ploidy TARGET 2
 
 The ``2`` here indicates a diploid normal genome. This will write the estimated
+
 haplotype level normal and tumour coverage to ``STDOUT``.
 
 Run Weaver core program
